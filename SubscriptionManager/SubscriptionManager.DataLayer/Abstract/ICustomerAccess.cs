@@ -8,7 +8,7 @@ using SubscriptionManager.DataLayer.DataTables;
 
 namespace SubscriptionManager.DataLayer.Abstract
 {
-    interface ICustomerAccess : IAccessLayerBase
+    public interface ICustomerAccess : IAccessLayerBase
     {
         List<Customer> LoadCustomersForStore(Guid storeId);
         Customer LoadCustomer(Guid customerId);

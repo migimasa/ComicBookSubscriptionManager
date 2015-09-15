@@ -13,24 +13,8 @@ using Dapper;
 
 namespace SubscriptionManager.DataLayer.Access
 {
-    public class CustomerAccess : Abstract.ICustomerAccess
+    public class CustomerAccess : BaseAccess, Abstract.ICustomerAccess
     {
-        public string ConnectionString
-        {
-            get
-            {
-                return ConfigurationManager.ConnectionStrings["SubscriptionManagerConnectionString"].ConnectionString;
-            }
-        }
-
-        public System.Data.SqlClient.SqlConnection GetOpenConnection()
-        {
-            SqlConnection connection = new SqlConnection(this.ConnectionString);
-
-            connection.Open();
-
-            return connection;
-        }
         public List<Customer> LoadCustomersForStore(Guid storeId)
         {
             using (SqlConnection connection = GetOpenConnection())
