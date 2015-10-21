@@ -9,26 +9,71 @@ namespace SubscriptionManager.Domain.StoreManagement
 {
     public class Store
     {
-        public Guid StoreId { get; private set; }
-        public string StoreName { get; private set; }
-        public string AddressOne { get; private set; }
-        public string AddressTwo { get; private set; }
-        public string City { get; private set; }
-        public string State { get; private set; }
-        public string ZipCode { get; private set; }
-        public string PhoneNumber { get; private set; }
-        public string EmailAddress { get; private set; }
+        public bool HasData { get; set; }
+        public Guid StoreId { get; set; }
+        public string StoreName { get; set; }
+        public string AddressOne { get; set; }
+        public string AddressTwo { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string ZipCode { get; set; }
+        public string PhoneNumber { get; set; }
+        public string EmailAddress { get; set; }
 
-        private IStoreAccess StoreLoader;
+        private IStoreAccess _storeLoader;
 
-        
-
-
-
-
-        public void Save()
+        public Store(SubscriptionManager.DataLayer.DataTables.Store store)
         {
+            this.FillProperties(store);
+        }
+        public Store(Guid storeId)
+        {
+            var store = _storeLoader.LoadStoreById(storeId);
 
+            if (store != null)
+            {
+                this.FillProperties(store);
+            }
+        }
+
+        private void FillProperties(SubscriptionManager.DataLayer.DataTables.Store store)
+        {
+            this.HasData = true;
+            this.StoreId = store.StoreId;
+            this.StoreName = store.StoreName;
+            this.AddressOne = store.AddressOne;
+            this.AddressTwo = store.AddressTwo;
+            this.City = store.City;
+            this.State = store.State;
+            this.ZipCode = store.ZipCode;
+            this.PhoneNumber = store.PhoneNumber;
+            this.EmailAddress = store.EmailAddress;
+        }
+
+        public Migi.Framework.Models.ChangeResult Save()
+        {
+            Migi.Framework.Models.ChangeResult result = new Migi.Framework.Models.ChangeResult();
+
+            
+
+            return result;
+        }
+
+        public class CreateStore
+        {
+            public string Name { get; set; }
+            public string AddressOne { get; set; }
+            public string AddressTwo { get; set; }
+            public string City { get; set; }
+            public string State { get; set; }
+            public string ZipCode { get; set; }
+            public string PhoneNumber { get; set; }
+            public string EmailAddress { get; set; } 
+        }
+
+        public static Migi.Framework.Models.ChangeResult CreateNewStore(CreateStore storeToCreate)
+        {
+            throw new NotImplementedException();
         }
     }
 }

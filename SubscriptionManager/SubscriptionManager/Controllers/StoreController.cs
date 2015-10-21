@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SubscriptionManager.Domain.StoreManagement;
 
 namespace SubscriptionManager.Controllers
 {
@@ -19,16 +20,35 @@ namespace SubscriptionManager.Controllers
             throw new NotImplementedException();
         }
 
+        [HttpGet]
         public ActionResult ModifyStore(string id)
         {
             Guid? storeId = Migi.Framework.Helper.Types.GetNullableGuid(id);
 
+            Store store = null;
+
             if (storeId.HasValue)
             {
-                //get store
+                store = new Store(storeId.Value);
             }
 
-            //Create view model
+            Models.Store.ModifyStore model = new Models.Store.ModifyStore(store);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult ModifyStore(Models.Store.ModifyStore storeModify)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+            throw new NotImplementedException();
+        }
+
+
+        public ActionResult Home(string id)
+        {
             throw new NotImplementedException();
         }
     }

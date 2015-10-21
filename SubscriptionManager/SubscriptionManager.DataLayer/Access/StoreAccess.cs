@@ -32,7 +32,7 @@ namespace SubscriptionManager.DataLayer.Access
         {
             using (SqlConnection connection = GetOpenConnection())
             {
-                int rowsAffected = connection.Execute("spStoreInsertStore", store);
+                int rowsAffected = connection.Execute("spStoreCreateStore", store);
 
                 return rowsAffected > 0;
             }
