@@ -1,0 +1,35 @@
+﻿@model List<SubscriptionManager.Models.Store.Store>
+
+@{
+    ViewBag.Title = "Stores";
+}
+
+<table class="table table-striped table-hover" id="StoreTable">
+    <thead>
+        <tr>
+            <th>Store Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (SubscriptionManager.Models.Store.Store store in Model)
+        {
+            <tr>
+                <td>@store.StoreName</td>
+                <td>@store.AddressOne</td>
+                <td>@store.PhoneNumber</td>
+                <td>@store.EmailAddress</td>
+                <td>
+                    <a href="@Url.Action("Home")/@store.StoreId" class="btn btn-primary">Store Home</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/Store/Stores.js")
+}

@@ -21,6 +21,17 @@ namespace SubscriptionManager.Domain.StoreManagement
         public string EmailAddress { get; set; }
 
         private IStoreAccess _storeLoader;
+        private IStoreAccess StoreLoader
+        {
+            get
+            {
+                if (_storeLoader == null)
+                {
+                    _storeLoader = new DataLayer.Access.StoreAccess();
+                }
+                return _storeLoader;
+            }
+        }
 
         public Store(SubscriptionManager.DataLayer.DataTables.Store store)
         {
@@ -28,7 +39,7 @@ namespace SubscriptionManager.Domain.StoreManagement
         }
         public Store(Guid storeId)
         {
-            var store = _storeLoader.LoadStoreById(storeId);
+            var store = StoreLoader.LoadStoreById(storeId);
 
             if (store != null)
             {

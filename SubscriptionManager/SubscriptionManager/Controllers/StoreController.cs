@@ -17,7 +17,22 @@ namespace SubscriptionManager.Controllers
 
         public ActionResult Stores()
         {
-            throw new NotImplementedException();
+            Stores storesLoader = new Stores();
+
+            Models.Store.Stores storesViewModel = new Models.Store.Stores(storesLoader.GetActiveStores());
+            return View(storesViewModel);
+        }
+
+        public ActionResult Home(string id)
+        {
+            Guid? storeId = Migi.Framework.Helper.Types.GetNullableGuid(id);
+
+            if (storeId.HasValue)
+            {
+                Store store = new Store(storeId.Value);
+                return View(new Models.Store.Store(store));
+            }
+            return new HttpNotFoundResult();
         }
 
         [HttpGet]
@@ -43,12 +58,6 @@ namespace SubscriptionManager.Controllers
             {
 
             }
-            throw new NotImplementedException();
-        }
-
-
-        public ActionResult Home(string id)
-        {
             throw new NotImplementedException();
         }
     }
