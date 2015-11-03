@@ -65,9 +65,9 @@ namespace SubscriptionManager.Domain.StoreManagement
         {
             Migi.Framework.Models.ChangeResult result = new Migi.Framework.Models.ChangeResult();
 
-            
+            throw new NotImplementedException();
 
-            return result;
+            //return result;
         }
 
         public class CreateStore
