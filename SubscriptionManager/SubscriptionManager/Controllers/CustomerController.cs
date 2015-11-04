@@ -28,11 +28,50 @@ namespace SubscriptionManager.Controllers
             return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
         }
 
-        public ActionResult ModifyCustomer(string id)
+        [HttpGet]
+        public ActionResult ModifyCustomer(Guid storeId, Guid? customerId)
         {
-            Guid? customerId = Migi.Framework.Helper.Types.GetNullableGuid(id);
+            Customer customer = null;
 
-            throw new NotImplementedException();
+            if (customerId.HasValue)
+            {
+                customer = new Customer(customerId.Value);
+            }
+
+            Models.Customer.Customer model = new Models.Customer.Customer(storeId, customer);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult ModifyCustomer(Models.Customer.Customer model)
+        {
+            if (ModelState.IsValid)
+            {
+                //save customer
+                if (model.CustomerId.HasValue)
+                {
+                    //create new
+                    Customers customers = new Customers();
+
+                    var result = Customer.CreateNewCustomer(new Customer.CustomerCreate()
+                    {
+                        City = model.City,
+                        EmailAddress = model.EmailAddress,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        PhoneNumber = model.PhoneNumber,
+                        State = model.State,
+                        StoreId = model.StoreId,
+                        ZipCode = model.ZipCode,
+                        UserId = new Guid("BC6B99B4-AC2A-4DD6-B183-73F52E26C44A")
+                    });
+                }
+                else
+                {
+                    //update
+                }
+            }
+            return View(model);
         }
     }
 }

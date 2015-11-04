@@ -16,7 +16,6 @@ namespace SubscriptionManager.Domain.CustomerManagement
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public string EmailAddress { get; set; }
-        public string StreetAddress { get; set; }
         public string City { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
@@ -57,7 +56,6 @@ namespace SubscriptionManager.Domain.CustomerManagement
             this.LastName = customer.LastName;
             this.PhoneNumber = customer.PhoneNumber;
             this.EmailAddress = customer.EmailAddress;
-            this.StreetAddress = customer.StreetAddress;
             this.City = customer.City;
             this.State = customer.State;
             this.ZipCode = customer.ZipCode;
@@ -74,16 +72,16 @@ namespace SubscriptionManager.Domain.CustomerManagement
             public Guid StoreId { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
-            public string StreetAddress { get; set; }
             public string City { get; set; }
             public string State { get; set; }
             public string ZipCode { get; set; }
             public string PhoneNumber { get; set; }
             public string EmailAddress { get; set; }
+            public Guid UserId { get; set; }
 
-            public Migi.Framework.Models.ChangeResult ValidateCustomer()
+            public CreateCustomerResult ValidateCustomer()
             {
-                Migi.Framework.Models.ChangeResult result = new Migi.Framework.Models.ChangeResult();
+                CreateCustomerResult result = new CreateCustomerResult();
 
                 if (string.IsNullOrWhiteSpace(this.FirstName))
                 {
@@ -113,7 +111,7 @@ namespace SubscriptionManager.Domain.CustomerManagement
 
         public static CreateCustomerResult CreateNewCustomer(CustomerCreate customerToCreate)
         {
-            CreateCustomerResult result = new CreateCustomerResult();
+            CreateCustomerResult result = customerToCreate.ValidateCustomer();
 
             if (result.IsSuccess)
             {
@@ -124,10 +122,10 @@ namespace SubscriptionManager.Domain.CustomerManagement
                 var createCustomerDl = new DataLayer.DataTables.Customer()
                 {
                     ChangeDate = DateTime.UtcNow,
-                    ChangeUserId = Guid.Empty,
+                    ChangeUserId = customerToCreate.UserId,
                     City = customerToCreate.City,
                     CreateDate = DateTime.UtcNow,
-                    CreateUserId = Guid.Empty,
+                    CreateUserId = customerToCreate.UserId,
                     CustomerId = newCustomerId,
                     DeleteDate = null,
                     EmailAddress = customerToCreate.EmailAddress,
@@ -136,7 +134,6 @@ namespace SubscriptionManager.Domain.CustomerManagement
                     PhoneNumber = customerToCreate.PhoneNumber,
                     State = customerToCreate.State,
                     StoreId = customerToCreate.StoreId,
-                    StreetAddress = customerToCreate.StreetAddress,
                     ZipCode = customerToCreate.ZipCode
                 };
 
