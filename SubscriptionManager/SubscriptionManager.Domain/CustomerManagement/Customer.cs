@@ -19,6 +19,11 @@ namespace SubscriptionManager.Domain.CustomerManagement
         public string City { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
+        private DateTime CreateDate { get; set; }
+        private Guid CreateUserId { get; set; }
+        private Guid ChangeUserId { get; set; }
+        private DateTime ChangeDate { get; set; }
+        private DateTime? DeleteDate { get; set; }
 
         private ICustomerAccess _customerLoader;
         private ICustomerAccess CustomerLoader
@@ -59,11 +64,60 @@ namespace SubscriptionManager.Domain.CustomerManagement
             this.City = customer.City;
             this.State = customer.State;
             this.ZipCode = customer.ZipCode;
+            this.CreateDate = customer.CreateDate;
+            this.CreateUserId = customer.CreateUserId;
+            this.ChangeUserId = customer.ChangeUserId;
+            this.ChangeDate = customer.ChangeDate;
+            this.DeleteDate = customer.DeleteDate;
         }
 
-        public Migi.Framework.Models.ChangeResult SaveCustomer()
+        public Migi.Framework.Models.ChangeResult SaveCustomer(Guid changeUserId)
         {
-            throw new NotImplementedException();
+            Migi.Framework.Models.ChangeResult result = new Migi.Framework.Models.ChangeResult();
+
+            if (string.IsNullOrWhiteSpace(this.FirstName))
+            {
+                result.AddErrorMessage("Customer requires a first name.");
+            }
+            if (string.IsNullOrWhiteSpace(this.LastName))
+            {
+                result.AddErrorMessage("Customer requires a last name.");
+            }
+            if (string.IsNullOrWhiteSpace(this.PhoneNumber))
+            {
+                result.AddErrorMessage("Customer requires a phone number.");
+            }
+            if (string.IsNullOrWhiteSpace(this.City))
+            {
+                result.AddErrorMessage("Customer requires a city.");
+            }
+
+            if (result.IsSuccess)
+            {
+                DataLayer.DataTables.Customer createCustomerDl = new DataLayer.DataTables.Customer()
+                {
+                    ChangeDate = DateTime.UtcNow,
+                    ChangeUserId = changeUserId,
+                    City = this.State,
+                    CreateDate = this.CreateDate,
+                    CreateUserId = this.CreateUserId,
+                    CustomerId = this.CustomerId,
+                    DeleteDate = this.DeleteDate,
+                    EmailAddress = this.EmailAddress,
+                    FirstName = this.FirstName,
+                    LastName = this.LastName,
+                    PhoneNumber = this.PhoneNumber,
+                    State = this.State,
+                    StoreId = this.StoreId,
+                    ZipCode = this.ZipCode
+                };
+
+                if (!this.CustomerLoader.ModifyCustomer(createCustomerDl))
+                {
+                    result.AddErrorMessage("Could not save Customer.");
+                }
+            }
+            return result;
         }
 
         #region Create Customer

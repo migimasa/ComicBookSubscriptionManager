@@ -23,14 +23,17 @@ namespace SubscriptionManager.Controllers
             {
                 Customers customersLoader = new Domain.CustomerManagement.Customers();
 
-                Models.Customer.Customers customersViewModel = new Models.Customer.Customers(customersLoader.GetCustomersForStore(storeId.Value));
+                Models.Customer.Customers customersViewModel = new Models.Customer.Customers(storeId.Value, customersLoader.GetCustomersForStore(storeId.Value));
+                return View(customersViewModel);
             }
             return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
         }
 
         [HttpGet]
-        public ActionResult ModifyCustomer(Guid storeId, Guid? customerId)
+        public ActionResult ModifyCustomer(Guid storeId, string id)
         {
+            Guid? customerId = Migi.Framework.Helper.Types.GetNullableGuid(id);
+
             Customer customer = null;
 
             if (customerId.HasValue)
@@ -50,6 +53,29 @@ namespace SubscriptionManager.Controllers
                 //save customer
                 if (model.CustomerId.HasValue)
                 {
+                    //update
+                    Customer customer = new Customer(model.CustomerId.Value);
+
+                    if (customer.HasData)
+                    {
+                        customer.FirstName = model.FirstName;
+                        customer.LastName = model.LastName;
+                        customer.PhoneNumber = model.PhoneNumber;
+                        customer.EmailAddress = model.EmailAddress;
+                        customer.City = model.City;
+                        customer.State = model.State;
+                        customer.ZipCode = model.ZipCode;
+
+
+                        var result = customer.SaveCustomer(new Guid("BC6B99B4-AC2A-4DD6-B183-73F52E26C44A"));
+                    }
+                    else
+                    {
+                        return new HttpNotFoundResult();
+                    }
+                }
+                else
+                {
                     //create new
                     Customers customers = new Customers();
 
@@ -65,10 +91,6 @@ namespace SubscriptionManager.Controllers
                         ZipCode = model.ZipCode,
                         UserId = new Guid("BC6B99B4-AC2A-4DD6-B183-73F52E26C44A")
                     });
-                }
-                else
-                {
-                    //update
                 }
             }
             return View(model);

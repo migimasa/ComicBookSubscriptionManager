@@ -1,0 +1,62 @@
+﻿@model SubscriptionManager.Models.Customer.Customer
+
+@{
+    ViewBag.Title = "Change Customer";
+}
+
+@using (Html.BeginForm("ModifyCustomer", "Customer", FormMethod.Post, new { @class="form-horizontal", enctype = "multipart/form-data" }))
+{
+    <fieldset>
+        <legend>Change Customer</legend>
+        @Html.EditorFor(x => x.StoreId)
+        @Html.EditorFor(x => x.CustomerId)
+        <div class="form-group">
+            @Html.LabelFor(x => x.FirstName, new { @class="col-lg-2 control-label" })
+            <div class="col-lg-10">
+                @Html.TextBoxFor(x => x.FirstName, new {  @class="form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.LastName, new { @class = "col-lg-2 control-label" })
+            <div class="col-lg-10">
+                @Html.TextBoxFor(x => x.LastName, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.PhoneNumber, new { @class = "col-lg-2 control-label" })
+            <div class="col-lg-10">
+                @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.EmailAddress, new { @class = "col-lg-2 control-label" })
+            <div class="col-lg-10">
+                @Html.TextBoxFor(x => x.EmailAddress, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.City, new { @class = "col-lg-2 control-label" })
+            <div class="col-lg-10">
+                @Html.TextBoxFor(x => x.City, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.State, new { @class = "col-lg-2 control-label" })
+            <div class="col-lg-10">
+                @Html.TextBoxFor(x => x.State, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.ZipCode, new { @class = "col-lg-2 control-label" })
+            <div class="col-lg-10">
+                @Html.TextBoxFor(x => x.ZipCode, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <button type="reset" class="btn btn-default">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </fieldset>
+}

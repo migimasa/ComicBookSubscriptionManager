@@ -12,9 +12,12 @@ namespace SubscriptionManager.Models.Customer
 
         }
 
-        public Customers(List<Domain.CustomerManagement.Customer> list)
+        public Customers(Guid storeId, List<Domain.CustomerManagement.Customer> list)
         {
-            
+            foreach (var cust in list)
+            {
+                this.Add(new Customer(storeId, cust));
+            }
         }
     }
 }
