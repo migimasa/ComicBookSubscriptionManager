@@ -28,9 +28,11 @@ namespace SubscriptionManager
                       "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/DataTables").Include(
-                        "~/Scripts/DataTables/jquery.dataTables.js"));
+                        "~/Scripts/DataTables/jquery.dataTables.js",
+                        "~/Scripts/DataTables/dataTables.bootstrap.js"));
             bundles.Add(new StyleBundle("~/Content/DataTables").Include(
-                        "~/Content/DataTables/css/jquery.dataTables.css"));
+                        "~/Content/DataTables/css/jquery.dataTables.css",
+                        "~/Content/DataTables/css/dataTables.bootstrap.css"));
         }
     }
 }

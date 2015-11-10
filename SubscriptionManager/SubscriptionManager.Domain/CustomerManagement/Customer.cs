@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using SubscriptionManager.DataLayer.Abstract;
 
+using DapperWrapper;
+
 namespace SubscriptionManager.Domain.CustomerManagement
 {
-    public class Customer
+    public class Customer : Base.TransactionBase
     {
         public bool HasData { get; set; }
         public Guid CustomerId { get; set; }
@@ -94,27 +96,32 @@ namespace SubscriptionManager.Domain.CustomerManagement
 
             if (result.IsSuccess)
             {
-                DataLayer.DataTables.Customer createCustomerDl = new DataLayer.DataTables.Customer()
+                using (ITransactionScope scope = this.TransactionScopeWrapper)
                 {
-                    ChangeDate = DateTime.UtcNow,
-                    ChangeUserId = changeUserId,
-                    City = this.State,
-                    CreateDate = this.CreateDate,
-                    CreateUserId = this.CreateUserId,
-                    CustomerId = this.CustomerId,
-                    DeleteDate = this.DeleteDate,
-                    EmailAddress = this.EmailAddress,
-                    FirstName = this.FirstName,
-                    LastName = this.LastName,
-                    PhoneNumber = this.PhoneNumber,
-                    State = this.State,
-                    StoreId = this.StoreId,
-                    ZipCode = this.ZipCode
-                };
+                    DataLayer.DataTables.Customer createCustomerDl = new DataLayer.DataTables.Customer()
+                    {
+                        ChangeDate = DateTime.UtcNow,
+                        ChangeUserId = changeUserId,
+                        City = this.State,
+                        CreateDate = this.CreateDate,
+                        CreateUserId = this.CreateUserId,
+                        CustomerId = this.CustomerId,
+                        DeleteDate = this.DeleteDate,
+                        EmailAddress = this.EmailAddress,
+                        FirstName = this.FirstName,
+                        LastName = this.LastName,
+                        PhoneNumber = this.PhoneNumber,
+                        State = this.State,
+                        StoreId = this.StoreId,
+                        ZipCode = this.ZipCode
+                    };
 
-                if (!this.CustomerLoader.ModifyCustomer(createCustomerDl))
-                {
-                    result.AddErrorMessage("Could not save Customer.");
+                    if (!this.CustomerLoader.ModifyCustomer(createCustomerDl))
+                    {
+                        result.AddErrorMessage("Could not save Customer.");
+                    }
+
+                    scope.Complete();
                 }
             }
             return result;

@@ -54,7 +54,7 @@
         </div>
         <div class="form-group">
             <div class="col-lg-10 col-lg-offset-2">
-                <button type="reset" class="btn btn-default">Cancel</button>
+                @Html.ActionLink("Cancel", "Customers", "Customer", new { id = Model.StoreId }, new { @class="btn btn-default" })
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>
         </div>

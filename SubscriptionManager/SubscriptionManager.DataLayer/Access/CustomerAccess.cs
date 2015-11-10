@@ -45,7 +45,7 @@ namespace SubscriptionManager.DataLayer.Access
         {
             using (SqlConnection connection = GetOpenConnection())
             {
-                int rowsAffected = connection.Execute("spCustomerUpdateCustomer", customer);
+                int rowsAffected = connection.Execute("spCustomerUpdateCustomer", param: customer.GetParametersForUpdate(), commandType: CommandType.StoredProcedure);
 
                 return rowsAffected > 0;
             }

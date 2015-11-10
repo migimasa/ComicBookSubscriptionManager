@@ -18,18 +18,29 @@ namespace SubscriptionManager.Models.Customer
         [StringLength(500, MinimumLength=1, ErrorMessage="A first name must be less than 500 characters long.")]
         [Display(Name="First Name")]
         public string FirstName { get; set; }
+
         [Required(AllowEmptyStrings=false, ErrorMessage="A last name is required.")]
         [StringLength(500, ErrorMessage = "A last name must be less than 500 characters long.")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+
         [Required(AllowEmptyStrings = false, ErrorMessage = "A phone number is required.")]
         [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Phone #")]   
         public string PhoneNumber { get; set; }
+
         [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email")]
         public string EmailAddress { get; set; }
+
+        [Display(Name = "City")]    
         public string City { get; set; }
+
+        [Display(Name = "State")]
         public string State { get; set; }
+
         [DataType(DataType.PostalCode)]
+        [Display(Name = "Zip Code")] 
         public string ZipCode { get; set; }
 
         public Customer() { }

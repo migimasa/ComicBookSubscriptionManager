@@ -68,6 +68,11 @@ namespace SubscriptionManager.Controllers
 
 
                         var result = customer.SaveCustomer(new Guid("BC6B99B4-AC2A-4DD6-B183-73F52E26C44A"));
+
+                        if (result.IsSuccess)
+                        {
+                            return RedirectToAction("Customers", new { id = model.StoreId });
+                        }
                     }
                     else
                     {
@@ -91,6 +96,12 @@ namespace SubscriptionManager.Controllers
                         ZipCode = model.ZipCode,
                         UserId = new Guid("BC6B99B4-AC2A-4DD6-B183-73F52E26C44A")
                     });
+
+
+                    if (result.IsSuccess)
+                    {
+                        return Redirect("Customers/" + model.StoreId);
+                    }
                 }
             }
             return View(model);
