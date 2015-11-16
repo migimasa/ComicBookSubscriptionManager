@@ -10,6 +10,6 @@ namespace SubscriptionManager.DataLayer.DataTables
     {
         public Guid PublisherId { get; set; }
         public string PublisherName { get; set; }
-        public bool IsActive { get; set; }
+
     }
 }

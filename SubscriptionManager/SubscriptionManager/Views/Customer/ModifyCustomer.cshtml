@@ -4,16 +4,16 @@
     ViewBag.Title = "Change Customer";
 }
 
-@using (Html.BeginForm("ModifyCustomer", "Customer", FormMethod.Post, new { @class="form-horizontal", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("ModifyCustomer", "Customer", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
 {
     <fieldset>
         <legend>Change Customer</legend>
         @Html.EditorFor(x => x.StoreId)
         @Html.EditorFor(x => x.CustomerId)
         <div class="form-group">
-            @Html.LabelFor(x => x.FirstName, new { @class="col-lg-2 control-label" })
+            @Html.LabelFor(x => x.FirstName, new { @class = "col-lg-2 control-label" })
             <div class="col-lg-10">
-                @Html.TextBoxFor(x => x.FirstName, new {  @class="form-control" })
+                @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group">
@@ -43,7 +43,7 @@
         <div class="form-group">
             @Html.LabelFor(x => x.State, new { @class = "col-lg-2 control-label" })
             <div class="col-lg-10">
-                @Html.TextBoxFor(x => x.State, new { @class = "form-control" })
+                @Html.DropDownListFor(x => x.State, Migi.Framework.Helper.MvcUI.GetUsStateAbbreviationSelectList(Model.State, true), new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group">
@@ -54,7 +54,7 @@
         </div>
         <div class="form-group">
             <div class="col-lg-10 col-lg-offset-2">
-                @Html.ActionLink("Cancel", "Customers", "Customer", new { id = Model.StoreId }, new { @class="btn btn-default" })
+                @Html.ActionLink("Cancel", "Customers", "Customer", new { id = Model.StoreId }, new { @class = "btn btn-default" })
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>
         </div>

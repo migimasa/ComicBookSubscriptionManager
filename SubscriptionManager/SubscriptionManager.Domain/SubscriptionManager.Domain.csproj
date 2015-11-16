@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\TransactionBase.cs" />
+    <Compile Include="ComicBookSeriesManagement\Publishers.cs" />
     <Compile Include="CustomerManagement\Customer.cs" />
     <Compile Include="CustomerManagement\Customers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -7,6 +7,8 @@ namespace SubscriptionManager.Models.Customer
 {
     public class Customers : List<Customer>
     {
+        public Guid StoreId { get; private set; }
+
         public Customers()
         {
 
@@ -14,6 +16,7 @@ namespace SubscriptionManager.Models.Customer
 
         public Customers(Guid storeId, List<Domain.CustomerManagement.Customer> list)
         {
+            this.StoreId = storeId;
             foreach (var cust in list)
             {
                 this.Add(new Customer(storeId, cust));

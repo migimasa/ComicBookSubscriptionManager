@@ -1,0 +1,21 @@
+﻿@model SubscriptionManager.Models.Customer.Customer
+@{
+    ViewBag.Title = string.Format("{0} {1} Home", Model.FirstName, Model.LastName);
+}
+
+<div class="container-fluid">
+    <div class="col-lg-5">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">
+                    @Html.DisplayFor(x => x.FirstName) @Html.DisplayFor(x => x.LastName)
+                </h2>
+            </div>
+            <div class="panel-body">
+                <p>
+                    Phone: <strong>@Html.DisplayFor(x => x.PhoneNumber)</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

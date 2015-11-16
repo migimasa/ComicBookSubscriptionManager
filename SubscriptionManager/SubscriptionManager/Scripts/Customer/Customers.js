@@ -1,3 +1,6 @@
 ﻿$(document).ready(function () {
-    $('#CustomerTable').DataTable();
+    $('#CustomerTable').DataTable({
+        ordering: false,
+        info: false
+    });
 });

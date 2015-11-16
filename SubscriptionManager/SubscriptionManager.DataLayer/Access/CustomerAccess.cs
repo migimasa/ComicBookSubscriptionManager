@@ -35,7 +35,7 @@ namespace SubscriptionManager.DataLayer.Access
         {
             using (SqlConnection connection = GetOpenConnection())
             {
-                int rowsAffected = connection.Execute("spCustomerCreateCustomer", customer);
+                int rowsAffected = connection.Execute("spCustomerCreateCustomer", param: customer.GetParametersForCreate(), commandType: CommandType.StoredProcedure);
 
                 return rowsAffected > 0;
             }

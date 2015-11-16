@@ -33,10 +33,12 @@ namespace SubscriptionManager.Models.Customer
         [Display(Name = "Email")]
         public string EmailAddress { get; set; }
 
-        [Display(Name = "City")]    
+        [Display(Name = "City")]
+        [Required(AllowEmptyStrings=false, ErrorMessage = "A City is required.")]
         public string City { get; set; }
 
         [Display(Name = "State")]
+        [Required(ErrorMessage="A State is required.")]
         public string State { get; set; }
 
         [DataType(DataType.PostalCode)]
@@ -48,7 +50,7 @@ namespace SubscriptionManager.Models.Customer
         public Customer(Guid storeId, SubscriptionManager.Domain.CustomerManagement.Customer customer)
         {
             this.StoreId = storeId;
-            if (customer.HasData)
+            if (customer != null && customer.HasData)
             {
                 FillCustomerProperties(customer);
             }

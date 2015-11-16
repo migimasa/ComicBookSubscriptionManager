@@ -102,7 +102,7 @@ namespace SubscriptionManager.Domain.CustomerManagement
                     {
                         ChangeDate = DateTime.UtcNow,
                         ChangeUserId = changeUserId,
-                        City = this.State,
+                        City = this.City,
                         CreateDate = this.CreateDate,
                         CreateUserId = this.CreateUserId,
                         CustomerId = this.CustomerId,
@@ -176,38 +176,42 @@ namespace SubscriptionManager.Domain.CustomerManagement
 
             if (result.IsSuccess)
             {
-                ICustomerAccess customerDl = new DataLayer.Access.CustomerAccess();
-
-                Guid newCustomerId = Guid.NewGuid();
-
-                var createCustomerDl = new DataLayer.DataTables.Customer()
+                using (ITransactionScope scope = new TransactionScopeWrapper(new System.Transactions.TransactionScope()))
                 {
-                    ChangeDate = DateTime.UtcNow,
-                    ChangeUserId = customerToCreate.UserId,
-                    City = customerToCreate.City,
-                    CreateDate = DateTime.UtcNow,
-                    CreateUserId = customerToCreate.UserId,
-                    CustomerId = newCustomerId,
-                    DeleteDate = null,
-                    EmailAddress = customerToCreate.EmailAddress,
-                    FirstName = customerToCreate.FirstName,
-                    LastName = customerToCreate.LastName,
-                    PhoneNumber = customerToCreate.PhoneNumber,
-                    State = customerToCreate.State,
-                    StoreId = customerToCreate.StoreId,
-                    ZipCode = customerToCreate.ZipCode
-                };
+                    ICustomerAccess customerDl = new DataLayer.Access.CustomerAccess();
 
-                if (customerDl.CreateCustomer(createCustomerDl))
-                {
-                    result.CustomerId = newCustomerId;
-                }
-                else
-                {
-                    result.AddErrorMessage("Could not save Customer.");
+                    Guid newCustomerId = Guid.NewGuid();
+
+                    var createCustomerDl = new DataLayer.DataTables.Customer()
+                    {
+                        ChangeDate = DateTime.UtcNow,
+                        ChangeUserId = customerToCreate.UserId,
+                        City = customerToCreate.City,
+                        CreateDate = DateTime.UtcNow,
+                        CreateUserId = customerToCreate.UserId,
+                        CustomerId = newCustomerId,
+                        DeleteDate = null,
+                        EmailAddress = customerToCreate.EmailAddress,
+                        FirstName = customerToCreate.FirstName,
+                        LastName = customerToCreate.LastName,
+                        PhoneNumber = customerToCreate.PhoneNumber,
+                        State = customerToCreate.State,
+                        StoreId = customerToCreate.StoreId,
+                        ZipCode = customerToCreate.ZipCode
+                    };
+
+                    if (customerDl.CreateCustomer(createCustomerDl))
+                    {
+                        result.CustomerId = newCustomerId;
+                    }
+                    else
+                    {
+                        result.AddErrorMessage("Could not save Customer.");
+                    }
+
+                    scope.Complete();
                 }
             }
-
             return result;
         }
         #endregion

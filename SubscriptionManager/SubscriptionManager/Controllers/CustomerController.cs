@@ -15,6 +15,23 @@ namespace SubscriptionManager.Controllers
             return RedirectToAction("Customers");
         }
 
+        public ActionResult Home(string id)
+        {
+            Guid? customerId = Migi.Framework.Helper.Types.GetNullableGuid(id);
+
+            if (customerId.HasValue)
+            {
+                Customer customer = new Customer(customerId.Value);
+
+                if (customer.HasData)
+                {
+                    Models.Customer.Customer customerViewModel = new Models.Customer.Customer(customer.StoreId, customer);
+                    return View(customerViewModel);
+                }
+            }
+            return new HttpNotFoundResult();
+        }
+
         public ActionResult Customers(string id)
         {
             Guid? storeId = Migi.Framework.Helper.Types.GetNullableGuid(id);
