@@ -18,6 +18,8 @@ namespace SubscriptionManager.Models.Store
         public string PhoneNumber { get; private set; }
         public string EmailAddress { get; private set; }
 
+        public List<Customer.Customer> Customers { get; set; }
+
         public Store(Domain.StoreManagement.Store store)
         {
             this.StoreId = store.StoreId;
@@ -29,6 +31,17 @@ namespace SubscriptionManager.Models.Store
             this.ZipCode = store.ZipCode;
             this.PhoneNumber = store.PhoneNumber;
             this.EmailAddress = store.EmailAddress;
+
+            FillCustomers(store);
+        }
+
+        private void FillCustomers(Domain.StoreManagement.Store store)
+        {
+            this.Customers = new List<Customer.Customer>();
+            foreach (var customer in store.Customers)
+            {
+                this.Customers.Add(new Customer.Customer(customer.StoreId, customer));
+            }
         }
     }
 }

@@ -1,7 +1,40 @@
 ﻿@model SubscriptionManager.Models.Store.Store
 
 @{
-    ViewBag.Title = "Home";
+    ViewBag.Title = Model.StoreName + " Home";
 }
 
-<h2>@Model.StoreName</h2>
+<div class="container-fluid">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h1 class="panel-title">
+                @Html.DisplayFor(x => x.StoreName)
+            </h1>
+        </div>
+        <div class="panel-body">
+            <p>
+                <strong>@Html.DisplayFor(x => x.AddressOne)</strong>
+            </p>
+            <p>
+                <strong>@Html.DisplayFor(x => x.AddressTwo)</strong>
+            </p>
+            <p>
+                <strong>@Html.DisplayFor(x => x.City), @Html.DisplayFor(x => x.State)</strong>
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-lg-5">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Subscriptions</h3>
+            </div>
+            <div class="panel-body">
+                @Html.ActionLink(@Model.Customers.Count().ToString("N0"), "Customers/" + Model.StoreId, "Customer") people have subscriptions.
+            </div>
+        </div>
+    </div>
+</div>

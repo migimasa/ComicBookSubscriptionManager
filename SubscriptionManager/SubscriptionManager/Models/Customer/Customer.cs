@@ -41,6 +41,14 @@ namespace SubscriptionManager.Models.Customer
         [Required(ErrorMessage="A State is required.")]
         public string State { get; set; }
 
+        public string CityState
+        {
+            get
+            {
+                return string.Format("{0}, {1}", this.City, this.State);
+            }
+        }
+
         [DataType(DataType.PostalCode)]
         [Display(Name = "Zip Code")] 
         public string ZipCode { get; set; }

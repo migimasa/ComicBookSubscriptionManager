@@ -30,7 +30,9 @@ namespace SubscriptionManager.Controllers
             if (storeId.HasValue)
             {
                 Store store = new Store(storeId.Value);
-                return View(new Models.Store.Store(store));
+
+                Models.Store.Store storeViewModel = new Models.Store.Store(store);
+                return View(storeViewModel);
             }
             return new HttpNotFoundResult();
         }

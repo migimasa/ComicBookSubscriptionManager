@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Data.Sql;
 using System.Data.SqlClient;
 using System.Linq;
@@ -18,14 +20,14 @@ namespace SubscriptionManager.DataLayer.Access
         {
             using (SqlConnection connection = GetOpenConnection())
             {
-                return connection.Query<Store>("spStoreGetStore", new { StoreId = storeId }).FirstOrDefault();
+                return connection.Query<Store>("spStoreGetStore", new { StoreId = storeId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
         }
         public List<Store> LoadAllStores()
         {
             using (SqlConnection connection = GetOpenConnection())
             {
-                return connection.Query<Store>("spStoreGetStore").ToList();
+                return connection.Query<Store>("spStoreGetStore", commandType: CommandType.StoredProcedure).ToList();
             }
         }
         public bool CreateStore(Store store)

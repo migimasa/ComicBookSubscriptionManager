@@ -33,6 +33,19 @@ namespace SubscriptionManager.Domain.StoreManagement
             }
         }
 
+        private List<CustomerManagement.Customer> _customers;
+        public List<CustomerManagement.Customer> Customers
+        {
+            get
+            {
+                if (_customers == null)
+                {
+                    _customers = new CustomerManagement.Customers().GetCustomersForStore(this.StoreId);
+                }
+                return _customers;
+            }
+        }
+
         public Store(SubscriptionManager.DataLayer.DataTables.Store store)
         {
             this.FillProperties(store);
