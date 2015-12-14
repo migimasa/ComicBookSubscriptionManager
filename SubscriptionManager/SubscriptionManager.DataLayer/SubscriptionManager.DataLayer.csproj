@@ -62,6 +62,7 @@
     <Compile Include="Abstract\IStoreAccess.cs" />
     <Compile Include="Abstract\IStoreUserAccess.cs" />
     <Compile Include="Abstract\IUserAccess.cs" />
+    <Compile Include="Access\ComicBookSeriesAccess.cs" />
     <Compile Include="Access\CustomerAccess.cs" />
     <Compile Include="Access\PublisherAccess.cs" />
     <Compile Include="Access\StoreAccess.cs" />
@@ -70,7 +71,7 @@
     <Compile Include="DataTables\CustomerSeries.cs" />
     <Compile Include="DataTables\DataTableBase.cs" />
     <Compile Include="DataTables\Publisher.cs" />
-    <Compile Include="DataTables\Series.cs" />
+    <Compile Include="DataTables\ComicBookSeries.cs" />
     <Compile Include="DataTables\Store.cs" />
     <Compile Include="DataTables\StoreUser.cs" />
     <Compile Include="DataTables\User.cs" />

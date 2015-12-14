@@ -7,7 +7,7 @@
 <h1>Customers</h1>
 
 <div class="pull-right form-group">
-    @Html.ActionLink("Add Customer", "ModifyCustomer", new { storeId = Model.StoreId }, new { @class = "btn btn-primary" })
+    <a data-bind="click:showModifyModal" href='@Url.Action("ModifyCustomer")/?storeId=@Model.StoreId' class="btn btn-primary">Add Customer</a>
 </div>
 
 <table class="table table-hover table-bordered" id="CustomerTable">
@@ -20,37 +20,40 @@
             <th>City</th>
             <th>State</th>
             <th>Zip</th>
-            <th></th>
+            <th>Actions</th>
         </tr>
     </thead>
-    <tbody>
-        @foreach (SubscriptionManager.Models.Customer.Customer customer in Model)
-        {
-            <tr>
-                <td>@customer.FirstName</td>
-                <td>@customer.LastName</td>
-                <td>@customer.EmailAddress</td>
-                <td>@customer.PhoneNumber</td>
-                <td>@customer.City</td>
-                <td>@customer.State</td>
-                <td>@customer.ZipCode</td>
-                <td>
-                    <div class="btn-group">
-                        <a href="#" class="btn btn-default">Actions</a>
-                        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="@Url.Action("Home")/@customer.CustomerId">Home</li>
-                            <li><a href="@Url.Action("ModifyCustomer")/@customer.CustomerId/?storeId=@customer.StoreId">Edit</a></li>
-                        </ul>
-                    </div>
-                    @*<a href="@Url.Action("ModifyCustomer")/@customer.CustomerId/?storeId=@customer.StoreId" class="btn btn-default">Edit</a>*@
-                </td>
-            </tr>
-        }
-    </tbody>
+    <tbody data-bind="foreach: customers">
+        <tr> 
+            <td data-bind="text: FirstName"></td>
+            <td data-bind="text: LastName"></td>
+            <td data-bind="text: EmailAddress"></td>
+            <td data-bind="text: PhoneNumber"></td>
+            <td data-bind="text: City"></td>
+            <td data-bind="text: State"></td>
+            <td data-bind="text: ZipCode"></td>
+            <td>
+                <div class="btn-group">
+                    <a href="#" class="btn btn-default">Actions</a>
+                    <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a data-bind="attr: { href: '@Url.Action("Home")/' + CustomerId }">Home</a></li>
+                        <li><a data-bind="click: $parent.showModifyModal, attr: { href: '@Url.Action("ModifyCustomer")/' + CustomerId + '/?storeId=' + StoreId }">Edit</a></li>
+                    </ul>
+                </div>
 
+            </td>
+        </tr>
+    </tbody>
 </table>
 
 @section Scripts {
+    @Scripts.Render("/Scripts/ViewModels/Customer/CustomersViewModel.js")
+    <script>
+        var viewModel = new CustomersViewModel(@Html.HtmlConvertToJson(Model));
+        ko.applyBindings(viewModel);
+    </script>
     @Scripts.Render("~/Scripts/Customer/Customers.js")
+
+
 }

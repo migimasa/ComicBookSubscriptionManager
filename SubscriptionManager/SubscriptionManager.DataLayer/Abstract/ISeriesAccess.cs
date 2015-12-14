@@ -10,9 +10,10 @@ namespace SubscriptionManager.DataLayer.Abstract
 {
     public interface ISeriesAccess : IAccessLayerBase
     {
-        List<Series> LoadAllSeries();
-        Series LoadSeriesById(Guid seriesId);
-        bool CreateSeries(Series series);
-        bool ModifySeries(Series series);
+        List<ComicBookSeries> LoadAllSeries(bool? isActive);
+        ComicBookSeries LoadSeriesById(Guid seriesId);
+        List<ComicBookSeries> LoadSeriesForCustomerAndSearchDate(Guid customerId, DateTime searchDate);
+        bool CreateSeries(ComicBookSeries series);
+        bool ModifySeries(ComicBookSeries series);
     }
 }

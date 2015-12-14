@@ -102,18 +102,18 @@ namespace SubscriptionManager.Domain.CustomerManagement
                     {
                         ChangeDate = DateTime.UtcNow,
                         ChangeUserId = changeUserId,
-                        City = this.City,
+                        City = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(this.City),
                         CreateDate = this.CreateDate,
                         CreateUserId = this.CreateUserId,
                         CustomerId = this.CustomerId,
                         DeleteDate = this.DeleteDate,
-                        EmailAddress = this.EmailAddress,
-                        FirstName = this.FirstName,
-                        LastName = this.LastName,
-                        PhoneNumber = this.PhoneNumber,
-                        State = this.State,
+                        EmailAddress = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(this.EmailAddress),
+                        FirstName = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(this.FirstName),
+                        LastName = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(this.LastName),
+                        PhoneNumber = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(this.PhoneNumber),
+                        State = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(this.State),
                         StoreId = this.StoreId,
-                        ZipCode = this.ZipCode
+                        ZipCode = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(this.ZipCode)
                     };
 
                     if (!this.CustomerLoader.ModifyCustomer(createCustomerDl))
@@ -122,6 +122,7 @@ namespace SubscriptionManager.Domain.CustomerManagement
                     }
 
                     scope.Complete();
+                    scope.Dispose();
                 }
             }
             return result;
@@ -176,40 +177,36 @@ namespace SubscriptionManager.Domain.CustomerManagement
 
             if (result.IsSuccess)
             {
-                using (ITransactionScope scope = new TransactionScopeWrapper(new System.Transactions.TransactionScope()))
+
+                ICustomerAccess customerDl = new DataLayer.Access.CustomerAccess();
+
+                Guid newCustomerId = Guid.NewGuid();
+
+                var createCustomerDl = new DataLayer.DataTables.Customer()
                 {
-                    ICustomerAccess customerDl = new DataLayer.Access.CustomerAccess();
+                    ChangeDate = DateTime.UtcNow,
+                    ChangeUserId = customerToCreate.UserId,
+                    City = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.City),
+                    CreateDate = DateTime.UtcNow,
+                    CreateUserId = customerToCreate.UserId,
+                    CustomerId = newCustomerId,
+                    DeleteDate = null,
+                    EmailAddress = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.EmailAddress),
+                    FirstName = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.FirstName),
+                    LastName = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.LastName),
+                    PhoneNumber = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.PhoneNumber),
+                    State = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.State),
+                    StoreId = customerToCreate.StoreId,
+                    ZipCode = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.ZipCode)
+                };
 
-                    Guid newCustomerId = Guid.NewGuid();
-
-                    var createCustomerDl = new DataLayer.DataTables.Customer()
-                    {
-                        ChangeDate = DateTime.UtcNow,
-                        ChangeUserId = customerToCreate.UserId,
-                        City = customerToCreate.City,
-                        CreateDate = DateTime.UtcNow,
-                        CreateUserId = customerToCreate.UserId,
-                        CustomerId = newCustomerId,
-                        DeleteDate = null,
-                        EmailAddress = customerToCreate.EmailAddress,
-                        FirstName = customerToCreate.FirstName,
-                        LastName = customerToCreate.LastName,
-                        PhoneNumber = customerToCreate.PhoneNumber,
-                        State = customerToCreate.State,
-                        StoreId = customerToCreate.StoreId,
-                        ZipCode = customerToCreate.ZipCode
-                    };
-
-                    if (customerDl.CreateCustomer(createCustomerDl))
-                    {
-                        result.CustomerId = newCustomerId;
-                    }
-                    else
-                    {
-                        result.AddErrorMessage("Could not save Customer.");
-                    }
-
-                    scope.Complete();
+                if (customerDl.CreateCustomer(createCustomerDl))
+                {
+                    result.CustomerId = newCustomerId;
+                }
+                else
+                {
+                    result.AddErrorMessage("Could not save Customer.");
                 }
             }
             return result;

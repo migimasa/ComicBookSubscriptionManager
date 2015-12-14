@@ -63,6 +63,7 @@ namespace SubscriptionManager.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ModifyCustomer(Models.Customer.Customer model)
         {
             if (ModelState.IsValid)
@@ -117,7 +118,7 @@ namespace SubscriptionManager.Controllers
 
                     if (result.IsSuccess)
                     {
-                        return Redirect("Customers/" + model.StoreId);
+                        return RedirectToAction("Customers", new { id = model.StoreId });
                     }
                 }
             }

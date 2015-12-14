@@ -2,61 +2,84 @@
 
 @{
     ViewBag.Title = "Change Customer";
+    Layout = null;
 }
 
-@using (Html.BeginForm("ModifyCustomer", "Customer", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
-{
-    <fieldset>
-        <legend>Change Customer</legend>
-        @Html.EditorFor(x => x.StoreId)
-        @Html.EditorFor(x => x.CustomerId)
-        <div class="form-group">
-            @Html.LabelFor(x => x.FirstName, new { @class = "col-lg-2 control-label" })
-            <div class="col-lg-10">
-                @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control" })
+<div class="modal" id="modifyModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Change Customer</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("ModifyCustomer", "Customer", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", data_bind = "submit: saveCustomer" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <fieldset>
+                        <legend>Change Customer</legend>
+                        @Html.EditorFor(x => x.StoreId)
+                        @Html.EditorFor(x => x.CustomerId)
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.FirstName, new { @class = "col-lg-2 control-label" })
+                            <div class="col-lg-10">
+                                @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.LastName, new { @class = "col-lg-2 control-label" })
+                            <div class="col-lg-10">
+                                @Html.TextBoxFor(x => x.LastName, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.PhoneNumber, new { @class = "col-lg-2 control-label" })
+                            <div class="col-lg-10">
+                                @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.EmailAddress, new { @class = "col-lg-2 control-label" })
+                            <div class="col-lg-10">
+                                @Html.TextBoxFor(x => x.EmailAddress, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.City, new { @class = "col-lg-2 control-label" })
+                            <div class="col-lg-10">
+                                @Html.TextBoxFor(x => x.City, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.State, new { @class = "col-lg-2 control-label" })
+                            <div class="col-lg-10">
+                                @Html.DropDownListFor(x => x.State, Migi.Framework.Helper.MvcUI.GetUsStateAbbreviationSelectList(Model.State, true), new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.ZipCode, new { @class = "col-lg-2 control-label" })
+                            <div class="col-lg-10">
+                                @Html.TextBoxFor(x => x.ZipCode, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-10 col-lg-offset-2" data-bind="visible: !sending()">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                            <div class="progress" data-bind="visible: sending">
+                                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-value-min="0" aria-valuemax="100" style="width:100%">
+                                    <span class="sr-only"></span>
+                                </div>
+                            </div>
+                    </fieldset>
+                }
+
             </div>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(x => x.LastName, new { @class = "col-lg-2 control-label" })
-            <div class="col-lg-10">
-                @Html.TextBoxFor(x => x.LastName, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(x => x.PhoneNumber, new { @class = "col-lg-2 control-label" })
-            <div class="col-lg-10">
-                @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(x => x.EmailAddress, new { @class = "col-lg-2 control-label" })
-            <div class="col-lg-10">
-                @Html.TextBoxFor(x => x.EmailAddress, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(x => x.City, new { @class = "col-lg-2 control-label" })
-            <div class="col-lg-10">
-                @Html.TextBoxFor(x => x.City, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(x => x.State, new { @class = "col-lg-2 control-label" })
-            <div class="col-lg-10">
-                @Html.DropDownListFor(x => x.State, Migi.Framework.Helper.MvcUI.GetUsStateAbbreviationSelectList(Model.State, true), new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(x => x.ZipCode, new { @class = "col-lg-2 control-label" })
-            <div class="col-lg-10">
-                @Html.TextBoxFor(x => x.ZipCode, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-lg-10 col-lg-offset-2">
-                @Html.ActionLink("Cancel", "Customers", "Customer", new { id = Model.StoreId }, new { @class = "btn btn-default" })
-                <button type="submit" class="btn btn-primary">Save</button>
-            </div>
-        </div>
-    </fieldset>
-}
+    </div>
+</div>
+
