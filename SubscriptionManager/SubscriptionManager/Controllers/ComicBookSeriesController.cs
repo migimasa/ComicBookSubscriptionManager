@@ -21,12 +21,21 @@ namespace SubscriptionManager.Controllers
 
         public ActionResult _getCurrentComicBookSeries(Guid? publisherId)
         {
-            throw new NotImplementedException();
+            List<Models.ComicBookSeries.ComicBookSeries> comicBookSeriesViewModel = new List<Models.ComicBookSeries.ComicBookSeries>();
+
+            var listOfSeries = Domain.ComicBookSeriesManagement.Series.GetComicBookSeries(publisherId, true);
+
+            foreach (var series in listOfSeries)
+            {
+                comicBookSeriesViewModel.Add(new Models.ComicBookSeries.ComicBookSeries(series));
+            }
+
+            return Json(comicBookSeriesViewModel);
         }
 
         public ActionResult SeriesSearch()
         {
-            throw new NotImplementedException();
+            return View();
         }
     }
 }

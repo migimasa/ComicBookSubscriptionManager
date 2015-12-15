@@ -12,6 +12,7 @@ namespace SubscriptionManager.DataLayer.Abstract
     {
         List<ComicBookSeries> LoadAllSeries(bool? isActive);
         ComicBookSeries LoadSeriesById(Guid seriesId);
+        List<ComicBookSeries> LoadSeriesForPublisher(Guid publisherId, bool? isActive);
         List<ComicBookSeries> LoadSeriesForCustomerAndSearchDate(Guid customerId, DateTime searchDate);
         bool CreateSeries(ComicBookSeries series);
         bool ModifySeries(ComicBookSeries series);

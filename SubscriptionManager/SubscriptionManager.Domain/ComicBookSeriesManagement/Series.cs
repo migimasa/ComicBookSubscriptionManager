@@ -163,14 +163,24 @@ namespace SubscriptionManager.Domain.ComicBookSeriesManagement
         }
         #endregion
 
-        public static List<Series> GetComicBookSeries(bool? isActive = null)
+        public static List<Series> GetComicBookSeries(Guid? publisherId, bool? isActive)
         {
             List<Series> allSeries = new List<Series>();
             ISeriesAccess seriesLoader = new DataLayer.Access.ComicBookSeriesAccess();
 
-            List<DataLayer.DataTables.ComicBookSeries> allSeriesDls = seriesLoader.LoadAllSeries(isActive);
+            List<DataLayer.DataTables.ComicBookSeries> comicBookSeriesDls = new List<DataLayer.DataTables.ComicBookSeries>();
 
-            foreach (var series in allSeriesDls)
+            if (publisherId.HasValue)
+            {
+                comicBookSeriesDls = seriesLoader.LoadSeriesForPublisher(publisherId.Value, isActive);
+            }
+            else
+            {
+                comicBookSeriesDls = seriesLoader.LoadAllSeries(isActive);
+            }
+
+
+            foreach (var series in comicBookSeriesDls)
             {
                 allSeries.Add(new Series(series));
             }

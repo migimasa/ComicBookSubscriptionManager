@@ -20,7 +20,7 @@ namespace SubscriptionManager.DataLayer.Access
         {
             using (SqlConnection connection = GetOpenConnection())
             {
-                return connection.Query<ComicBookSeries>("spComicBookSeriesGetComicBookSeries", commandType: CommandType.StoredProcedure).ToList();
+                return connection.Query<ComicBookSeries>("spComicBookSeriesGetComicBookSeries", new { IsActive = isActive }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
         public ComicBookSeries LoadSeriesById(Guid seriesId)
@@ -35,6 +35,13 @@ namespace SubscriptionManager.DataLayer.Access
             using (SqlConnection connection = GetOpenConnection())
             {
                 return connection.Query<ComicBookSeries>("spComicBookSeriesGetComicBookSeriesForCustomer", new { CustomerId = customerId, SearchDate = searchDate }, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
+        public List<ComicBookSeries> LoadSeriesForPublisher(Guid publisherId, bool? isActive)
+        {
+            using (SqlConnection connection = GetOpenConnection())
+            {
+                return connection.Query<ComicBookSeries>("spComicBookSeriesGetComicBookSeries", new { PublisherId = publisherId, IsActive = isActive }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
         public bool CreateSeries(ComicBookSeries series)

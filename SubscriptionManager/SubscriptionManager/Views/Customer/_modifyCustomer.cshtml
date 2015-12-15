@@ -1,11 +1,5 @@
 ﻿@model SubscriptionManager.Models.Customer.Customer
 
-@{
-    ViewBag.Title = "Change Customer";
-    //Layout = null;
-    Layout = "~/Views/Shared/_BaseLayout.cshtml";
-}
-
 <div class="modal" id="modifyModal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -19,7 +13,6 @@
             <div class="modal-body">
                 @using (Html.BeginForm("ModifyCustomer", "Customer", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", data_bind = "submit: saveCustomer" }))
                 {
-                    @Html.ValidationSummary(true)
                     @Html.AntiForgeryToken()
                     <fieldset>
                         <legend>Change Customer</legend>
@@ -29,51 +22,45 @@
                             @Html.LabelFor(x => x.FirstName, new { @class = "col-lg-2 control-label" })
                             <div class="col-lg-10">
                                 @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(x => x.FirstName, "", new { @class = "text-danger" })
                             </div>
-
-
+                            <span class="has-error">
+                                @Html.ValidationMessageFor(x => x.FirstName)
+                            </span>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(x => x.LastName, new { @class = "col-lg-2 control-label" })
                             <div class="col-lg-10">
                                 @Html.TextBoxFor(x => x.LastName, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(x => x.LastName, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(x => x.PhoneNumber, new { @class = "col-lg-2 control-label" })
                             <div class="col-lg-10">
                                 @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(x => x.PhoneNumber, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(x => x.EmailAddress, new { @class = "col-lg-2 control-label" })
                             <div class="col-lg-10">
                                 @Html.TextBoxFor(x => x.EmailAddress, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(x => x.EmailAddress, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(x => x.City, new { @class = "col-lg-2 control-label" })
                             <div class="col-lg-10">
                                 @Html.TextBoxFor(x => x.City, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(x => x.City, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(x => x.State, new { @class = "col-lg-2 control-label" })
                             <div class="col-lg-10">
                                 @Html.DropDownListFor(x => x.State, Migi.Framework.Helper.MvcUI.GetUsStateAbbreviationSelectList(Model.State, true), new { @class = "form-control" })
-                                @Html.ValidationMessageFor(x => x.State, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(x => x.ZipCode, new { @class = "col-lg-2 control-label" })
                             <div class="col-lg-10">
                                 @Html.TextBoxFor(x => x.ZipCode, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(x => x.ZipCode, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
@@ -86,7 +73,6 @@
                                     <span class="sr-only"></span>
                                 </div>
                             </div>
-                        </div>
                     </fieldset>
                 }
 
@@ -95,6 +81,3 @@
     </div>
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

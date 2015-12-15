@@ -34,11 +34,11 @@ namespace SubscriptionManager.Models.Customer
         public string EmailAddress { get; set; }
 
         [Display(Name = "City")]
-        [Required(AllowEmptyStrings=false, ErrorMessage = "A City is required.")]
+        [Required(AllowEmptyStrings=false, ErrorMessage = "A city is required.")]
         public string City { get; set; }
 
         [Display(Name = "State")]
-        [Required(ErrorMessage="A State is required.")]
+        [Required(ErrorMessage="A state is required.")]
         public string State { get; set; }
 
         public string CityState
