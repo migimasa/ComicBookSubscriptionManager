@@ -55,7 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\ICustomerAccess.cs" />
-    <Compile Include="Abstract\ICustomerSeriesAccess.cs" />
+    <Compile Include="Abstract\ICustomerComicBookSeriesAccess.cs" />
     <Compile Include="Abstract\IDataTable.cs" />
     <Compile Include="Abstract\IPublisherAccess.cs" />
     <Compile Include="Abstract\ISeriesAccess.cs" />
@@ -64,11 +64,12 @@
     <Compile Include="Abstract\IUserAccess.cs" />
     <Compile Include="Access\ComicBookSeriesAccess.cs" />
     <Compile Include="Access\CustomerAccess.cs" />
+    <Compile Include="Access\CustomerComicBookAccess.cs" />
     <Compile Include="Access\PublisherAccess.cs" />
     <Compile Include="Access\StoreAccess.cs" />
     <Compile Include="Access\BaseAccess.cs" />
     <Compile Include="DataTables\Customer.cs" />
-    <Compile Include="DataTables\CustomerSeries.cs" />
+    <Compile Include="DataTables\CustomerComicBookSeries.cs" />
     <Compile Include="DataTables\DataTableBase.cs" />
     <Compile Include="DataTables\Publisher.cs" />
     <Compile Include="DataTables\ComicBookSeries.cs" />
