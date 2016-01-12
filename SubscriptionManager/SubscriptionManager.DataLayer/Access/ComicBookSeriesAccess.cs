@@ -41,7 +41,7 @@ namespace SubscriptionManager.DataLayer.Access
         {
             using (SqlConnection connection = GetOpenConnection())
             {
-                return connection.Query<ComicBookSeries>("spComicBookSeriesGetComicBookSeries", new { PublisherId = publisherId, IsActive = isActive }, commandType: CommandType.StoredProcedure).ToList();
+                return connection.Query<ComicBookSeries>("spComicBookSeriesGetComicBookSeriesForPublisher", new { PublisherId = publisherId, IsActive = isActive }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
         public bool CreateSeries(ComicBookSeries series)

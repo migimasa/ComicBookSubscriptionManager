@@ -198,12 +198,14 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
+    <Compile Include="Controllers\SubscriptionController.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ComicBookSeries\ComicBookSeries.cs" />
+    <Compile Include="Models\ComicBookSeries\SeriesViewModel.cs" />
     <Compile Include="Models\Customer\Customer.cs" />
     <Compile Include="Models\Customer\Customers.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -287,6 +289,7 @@
     <Content Include="Content\DataTables\css\dataTables.jqueryui.scss" />
     <None Include="Properties\PublishProfiles\RedFiveDevelopment.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\ComicBookSeries\Series.js" />
     <Content Include="Scripts\Customer\Customers.js" />
     <Content Include="Scripts\DataTables\dataTables.autoFill.js" />
     <Content Include="Scripts\DataTables\dataTables.autoFill.min.js" />
@@ -373,9 +376,11 @@
     <Content Include="Views\Shared\_BaseLayout.cshtml" />
     <Content Include="Views\ComicBookSeries\SeriesSearch.cshtml" />
     <Content Include="Views\Customer\_modifyCustomer.cshtml" />
+    <Content Include="Views\ComicBookSeries\Series.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Subscription\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

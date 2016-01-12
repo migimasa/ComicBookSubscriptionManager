@@ -21,7 +21,8 @@ namespace SubscriptionManager.DataLayer.Access
         {
             using (SqlConnection connection = GetOpenConnection())
             {
-                return connection.Query<CustomerComicBookSeries>("", new { CustomerId = customerId, SearchDate = searchDate }, commandType: CommandType.StoredProcedure).ToList();
+                return connection.Query<CustomerComicBookSeries>("spCustomerComicBookSeriesGetCustomerComicBookSeries", 
+                    new { CustomerId = customerId, SearchDate = searchDate }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
 
@@ -29,7 +30,8 @@ namespace SubscriptionManager.DataLayer.Access
         {
             using (SqlConnection connection = GetOpenConnection())
             {
-                return connection.Query<CustomerComicBookSeries>("", new { CustomerComicBookSeriesId = customerComicBookSeriesId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                return connection.Query<CustomerComicBookSeries>("spCustomerComicBookSeriesGetCustomerComicBookSeries", 
+                    new { CustomerComicBookSeriesId = customerComicBookSeriesId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
         }
 

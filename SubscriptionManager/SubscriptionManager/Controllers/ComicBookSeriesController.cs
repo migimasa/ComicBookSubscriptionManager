@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,21 +17,32 @@ namespace SubscriptionManager.Controllers
 
         public ActionResult Series()
         {
-            throw new NotImplementedException();
+            Models.ComicBookSeries.SeriesViewModel viewModel = new Models.ComicBookSeries.SeriesViewModel();
+            return View(viewModel);
         }
 
+        [HttpPost]
         public ActionResult _getCurrentComicBookSeries(Guid? publisherId)
         {
             List<Models.ComicBookSeries.ComicBookSeries> comicBookSeriesViewModel = new List<Models.ComicBookSeries.ComicBookSeries>();
 
             var listOfSeries = Domain.ComicBookSeriesManagement.Series.GetComicBookSeries(publisherId, true);
 
+            var publishers = new Domain.ComicBookSeriesManagement.Publishers().ToDictionary(x => x.PublisherId);
+
             foreach (var series in listOfSeries)
             {
-                comicBookSeriesViewModel.Add(new Models.ComicBookSeries.ComicBookSeries(series));
+                string publisherName = string.Empty;
+
+                if (publishers.ContainsKey(series.PublisherId))
+                {
+                    publisherName = publishers[series.PublisherId].PublisherName;
+                }
+
+                comicBookSeriesViewModel.Add(new Models.ComicBookSeries.ComicBookSeries(series, publisherName));
             }
 
-            return Json(comicBookSeriesViewModel);
+            return Json(new { data = comicBookSeriesViewModel });
         }
 
         public ActionResult SeriesSearch()

@@ -12,12 +12,15 @@ namespace SubscriptionManager.Models.ComicBookSeries
     public class ComicBookSeries
     {
         [HiddenInput(DisplayValue = false)]
-        [JsonProperty(PropertyName="comicBookSeriesId")]
+        [JsonProperty(PropertyName = "comicBookSeriesId")]
         public Guid ComicBookSeriesId { get; set; }
 
         [HiddenInput(DisplayValue = false)]
         [JsonProperty(PropertyName = "publisherId")]
         public Guid PublisherId { get; set; }
+
+        [JsonProperty(PropertyName = "publisherName")]
+        public string PublisherName { get; private set; }
 
         [JsonProperty(PropertyName = "comicBookSeriesTitle")]
         [Display(Name = "Title")]
@@ -29,12 +32,13 @@ namespace SubscriptionManager.Models.ComicBookSeries
         [Display(Name = "Active")]
         public bool IsActive { get; set; }
 
-        public ComicBookSeries(Domain.ComicBookSeriesManagement.Series series)
+        public ComicBookSeries(Domain.ComicBookSeriesManagement.Series series, string publisherName)
         {
             this.ComicBookSeriesId = series.ComicBookSeriesId;
             this.PublisherId = series.PublisherId;
             this.ComicBookSeriesTitle = series.ComicBookSeriesTitle;
             this.IsActive = series.IsActive;
+            this.PublisherName = publisherName;
         }
 
         public ComicBookSeries()

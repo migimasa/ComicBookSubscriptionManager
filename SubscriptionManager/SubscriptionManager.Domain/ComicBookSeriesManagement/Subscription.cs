@@ -26,15 +26,69 @@ namespace SubscriptionManager.Domain.ComicBookSeriesManagement
                 this.ExpiresDate = customerComicBookSeries.ExpiresDate;
             }
         }
+    }
 
+    public class Subscriptions : List<Subscription>
+    {
+        private Guid CustomerId { get; set; }
+        private DateTime SearchDate { get; set; }
 
-
-        public static Migi.Framework.Models.ChangeResult AddSubscription()
+        private DataLayer.Abstract.ICustomerComicBookSeriesAccess _comicBookSeriesAccess;
+        private DataLayer.Abstract.ICustomerComicBookSeriesAccess ComicBookSeriesAccess
         {
-            throw new NotImplementedException();        
+            get
+            {
+                if (this._comicBookSeriesAccess == null)
+                {
+                    this._comicBookSeriesAccess = new DataLayer.Access.CustomerComicBookAccess();
+                }
+                return _comicBookSeriesAccess;
+            }
         }
 
-        public Migi.Framework.Models.ChangeResult RemoveSubscription()
+        public Subscriptions(Guid customerId, DateTime searchDate)
+        {
+            this.CustomerId = customerId;
+            this.SearchDate = searchDate;
+
+            this.Process();
+        }
+
+        private void Process()
+        {
+            var customerComicBookSeries = this.ComicBookSeriesAccess.LoadComicBookSeriesForCustomer(this.CustomerId, this.SearchDate);
+
+            foreach (var comicBookSeries in customerComicBookSeries)
+            {
+                this.Add(new Subscription(comicBookSeries));
+            }
+        }
+
+
+        public Migi.Framework.Models.ChangeResult AddSubscription(Guid comicBookSeriesId, Guid userId)
+        {
+            Migi.Framework.Models.ChangeResult result = new Migi.Framework.Models.ChangeResult();
+
+            DataLayer.DataTables.CustomerComicBookSeries temp = new DataLayer.DataTables.CustomerComicBookSeries()
+            {
+                ChangeDate = DateTime.Now,
+                ChangeUserId = userId,
+                ComicBookSeriesId = comicBookSeriesId,
+                CreateDate = DateTime.Now,
+                CreateUserId = userId,
+                CustomerComicBookSeriesId = Guid.NewGuid(),
+                CustomerId = this.CustomerId,
+                DeleteDate = null,
+                EffectiveDate = DateTime.Now,
+                ExpiresDate = Base.Helper.GetDefaultExpiresDate()
+            };
+
+
+
+            throw new NotImplementedException();
+        }
+
+        public Migi.Framework.Models.ChangeResult RemoveSubscription(Guid comicBookSeriesId, Guid userId)
         {
             throw new NotImplementedException();
         }

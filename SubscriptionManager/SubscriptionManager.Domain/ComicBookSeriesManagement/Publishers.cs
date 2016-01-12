@@ -9,33 +9,30 @@ using Migi.Framework.Helper;
 
 namespace SubscriptionManager.Domain.ComicBookSeriesManagement
 {
-    public class Publishers
+    public class Publishers : List<Publisher>
     {
         private IPublisherAccess _publisherAccess;
 
         public Publishers()
         {
             this._publisherAccess = new PublisherAccess();
+
+            Process();
         }
 
-
-        public List<Publisher> GetAllPublishers()
+        private void Process()
         {
-            List<Publisher> publishersList = new List<Publisher>();
-
             var allPublishers = _publisherAccess.LoadPublishers();
 
             foreach (var publisherDl in allPublishers)
             {
-                publishersList.Add(new Publisher(publisherDl));
+                this.Add(new Publisher(publisherDl));
             }
-
-            return publishersList;
         }
-
+        
         public Publisher GetPublisherById(Guid publisherId)
         {
-            return new Publisher(_publisherAccess.LoadPublisherById(publisherId));
+            return this.Where(x => x.PublisherId == publisherId).FirstOrDefault();
         }
     }
 

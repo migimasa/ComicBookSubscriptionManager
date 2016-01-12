@@ -1,0 +1,29 @@
+﻿@model SubscriptionManager.Models.ComicBookSeries.SeriesViewModel
+
+@{
+    ViewBag.Title = "Series";
+}
+
+@Html.Hidden("Get_getCurrentComicBookSeriesURL", Url.Action("_getCurrentComicBookSeries"))
+
+<h1>Comic Book Series</h1>
+
+<div class="form-group">
+    @Html.LabelFor(x => x.PublisherSelectList, new { @class = "col-sm-1 control-label" })
+    @Html.DropDownList("PublisherSelectList", Model.PublisherSelectList, "All", new { @class="form-control" })
+</div>
+
+<table class="table table-hover table-bordered" id="comic-book-series-table">
+    <thead>
+        <tr>
+            <th>Publisher</th>
+            <th>Title</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+</table>
+
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/ComicBookSeries/Series.js")
+}
