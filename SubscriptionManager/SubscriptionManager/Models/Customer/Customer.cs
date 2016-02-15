@@ -53,6 +53,8 @@ namespace SubscriptionManager.Models.Customer
         [Display(Name = "Zip Code")] 
         public string ZipCode { get; set; }
 
+        public int SubscriptionsCount { get; set; }
+
         public Customer() { }
 
         public Customer(Guid storeId, SubscriptionManager.Domain.CustomerManagement.Customer customer)
@@ -78,6 +80,7 @@ namespace SubscriptionManager.Models.Customer
             this.City = customer.City;
             this.State = customer.State;
             this.ZipCode = customer.ZipCode;
+            this.SubscriptionsCount = customer.Subscriptions.Count;
         }
 
         private void FillDefaultProperties()
@@ -90,6 +93,7 @@ namespace SubscriptionManager.Models.Customer
             this.City = string.Empty;
             this.State = string.Empty;
             this.ZipCode = string.Empty;
+            this.SubscriptionsCount = 0;
         }
         
 

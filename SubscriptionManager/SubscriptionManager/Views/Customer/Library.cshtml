@@ -1,0 +1,51 @@
+﻿@model SubscriptionManager.Models.Customer.Library
+
+@{
+    ViewBag.Title = "Subscriptions";
+}
+
+@Html.Hidden("RemoveSubscriptionURL", @Url.Action("RemoveSubscription", "Customer"))
+<div id="alert-div"></div>
+
+<h1>Subscriptions</h1>
+
+
+<div class="pull-right form-group">
+    <a data-bind="click:showAddSubscriptionModal" href="" class="btn btn-primary">Add Subscription</a>
+</div>
+
+<table class="table table-hover table-bordered" id="SubscriptionTable">
+    <thead>
+        <tr>
+            <th>Publisher</th>
+            <th>Title</th>
+            <th>Added</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: subscriptions">
+        <tr>
+            <td data-bind="text: publisherName"></td>
+            <td data-bind="text: comicBookSeriesTitle"></td>
+            <td data-bind="text: effectiveDate"></td>
+            <td>
+                <div class="btn-group">
+                    <a href="#" class="btn btn-default">Actions</a>
+                    <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a data-bind="click:$parent.removeSubscription">Remove</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+@section Scripts {
+    @Scripts.Render("/Scripts/ViewModels/Customer/LibraryViewModel.js")
+    <script>
+        var viewModel = new LibraryViewModel(@Html.HtmlConvertToJson(Model));
+        ko.applyBindings(viewModel);
+    </script>
+    @Scripts.Render("~/Scripts/Customer/Library.js")
+}

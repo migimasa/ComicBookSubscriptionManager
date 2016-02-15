@@ -10,7 +10,7 @@ namespace SubscriptionManager.Domain.Base
     {
         public static DateTime GetDefaultExpiresDate()
         {
-            return new DateTime(2099, 12, 13);
+            return new DateTime(2099, 12, 31).ToUniversalTime();
         }
     }
 }

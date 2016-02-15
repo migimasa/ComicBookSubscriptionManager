@@ -40,6 +40,21 @@ namespace SubscriptionManager.Domain.CustomerManagement
             }
         }
 
+        private SubscriptionManager.Domain.ComicBookSeriesManagement.Subscriptions _subscriptions;
+        public SubscriptionManager.Domain.ComicBookSeriesManagement.Subscriptions Subscriptions
+        {
+            get
+            {
+                if (_subscriptions == null)
+                {
+                    _subscriptions = new ComicBookSeriesManagement.Subscriptions(this.CustomerId, this.SearchDate);
+                }
+                return _subscriptions;
+            }
+        }
+
+        private DateTime SearchDate { get; set; }
+
         public Customer(SubscriptionManager.DataLayer.DataTables.Customer customer)
         {
             this.FillProperties(customer);
@@ -71,6 +86,8 @@ namespace SubscriptionManager.Domain.CustomerManagement
             this.ChangeUserId = customer.ChangeUserId;
             this.ChangeDate = customer.ChangeDate;
             this.DeleteDate = customer.DeleteDate;
+
+            this.SearchDate = DateTime.UtcNow;
         }
 
         public Migi.Framework.Models.ChangeResult SaveCustomer(Guid changeUserId)

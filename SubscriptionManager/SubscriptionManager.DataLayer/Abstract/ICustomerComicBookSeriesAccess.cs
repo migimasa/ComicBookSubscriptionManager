@@ -8,11 +8,11 @@ using SubscriptionManager.DataLayer.DataTables;
 
 namespace SubscriptionManager.DataLayer.Abstract
 {
-    public interface ICustomerComicBookSeriesAccess : IAccessLayerBase
-    {
-        List<CustomerComicBookSeries> LoadComicBookSeriesForCustomer(Guid customerId, DateTime searchDate);
-        CustomerComicBookSeries LoadCustomerComicBookSeries(Guid customerComicBookSeriesId);
-        bool AddCustomerComicBookSeries(CustomerComicBookSeries customerSeries);
-        bool RemoveCustomerComicBookSeries(CustomerComicBookSeries customerSeries);
-    }
+    //public interface ICustomerComicBookSeriesAccess : IAccessLayerBase
+    //{
+    //    List<CustomerComicBookSeries> LoadComicBookSeriesForCustomer(Guid customerId, DateTime searchDate);
+    //    CustomerComicBookSeries LoadCustomerComicBookSeries(Guid customerComicBookSeriesId);
+    //    bool AddCustomerComicBookSeries(CustomerComicBookSeries customerSeries);
+    //    bool RemoveCustomerComicBookSeries(CustomerComicBookSeries customerSeries);
+    //}
 }

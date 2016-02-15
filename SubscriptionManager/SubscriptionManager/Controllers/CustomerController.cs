@@ -15,6 +15,7 @@ namespace SubscriptionManager.Controllers
             return RedirectToAction("Customers");
         }
 
+        [HttpGet]
         public ActionResult Home(string id)
         {
             Guid? customerId = Migi.Framework.Helper.Types.GetNullableGuid(id);
@@ -32,6 +33,7 @@ namespace SubscriptionManager.Controllers
             return new HttpNotFoundResult();
         }
 
+        [HttpGet]
         public ActionResult Customers(string id)
         {
             Guid? storeId = Migi.Framework.Helper.Types.GetNullableGuid(id);
@@ -123,6 +125,41 @@ namespace SubscriptionManager.Controllers
                 }
             }
             return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult Library(string id)
+        {
+            Guid? customerId = Migi.Framework.Helper.Types.GetNullableGuid(id);
+
+            if (customerId.HasValue)
+            {
+                Models.Customer.Library customerLibrary = new Models.Customer.Library(customerId.Value, DateTime.UtcNow);
+                return View(customerLibrary);
+            }
+            return new HttpNotFoundResult();
+        }
+
+        [HttpPost]
+        public ActionResult AddSubscription(Guid customerId, Guid comicBookSeriesId)
+        {
+            var customerSubscriptions = new Domain.ComicBookSeriesManagement.Subscriptions(customerId, DateTime.UtcNow);
+
+            var addResult = customerSubscriptions.AddSubscription(comicBookSeriesId, Guid.Empty);
+
+            return Json(new { IsSuccess = addResult.IsSuccess, ErrorMessages = addResult.ErrorMessages });
+        }
+
+        [HttpPost]
+        public ActionResult RemoveSubscription(Guid customerId, Guid comicBookSeriesId)
+        {
+            //var customerSubscriptions = new Domain.ComicBookSeriesManagement.Subscriptions(customerId, DateTime.UtcNow);
+
+            //var removeResult = customerSubscriptions.RemoveSubscription(comicBookSeriesId, Guid.Empty);
+
+            var removeResult = new Migi.Framework.Models.ChangeResult();
+
+            return Json(new { IsSuccess = removeResult.IsSuccess, ErrorMessages = removeResult.ErrorMessages });
         }
     }
 }

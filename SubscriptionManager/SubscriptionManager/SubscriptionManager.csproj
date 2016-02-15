@@ -208,6 +208,8 @@
     <Compile Include="Models\ComicBookSeries\SeriesViewModel.cs" />
     <Compile Include="Models\Customer\Customer.cs" />
     <Compile Include="Models\Customer\Customers.cs" />
+    <Compile Include="Models\Customer\Library.cs" />
+    <Compile Include="Models\Customer\Subscription.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Store\ModifyStore.cs" />
@@ -291,6 +293,7 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ComicBookSeries\Series.js" />
     <Content Include="Scripts\Customer\Customers.js" />
+    <Content Include="Scripts\Customer\Library.js" />
     <Content Include="Scripts\DataTables\dataTables.autoFill.js" />
     <Content Include="Scripts\DataTables\dataTables.autoFill.min.js" />
     <Content Include="Scripts\DataTables\dataTables.bootstrap.js" />
@@ -330,6 +333,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Store\Stores.js" />
     <Content Include="Scripts\ViewModels\Customer\CustomersViewModel.js" />
+    <Content Include="Scripts\ViewModels\Customer\LibraryViewModel.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -377,6 +381,7 @@
     <Content Include="Views\ComicBookSeries\SeriesSearch.cshtml" />
     <Content Include="Views\Customer\_modifyCustomer.cshtml" />
     <Content Include="Views\ComicBookSeries\Series.cshtml" />
+    <Content Include="Views\Customer\Library.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

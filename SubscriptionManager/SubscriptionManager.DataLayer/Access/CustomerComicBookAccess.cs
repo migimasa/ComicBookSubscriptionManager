@@ -14,35 +14,35 @@ using Dapper;
 
 namespace SubscriptionManager.DataLayer.Access
 {
-    public class CustomerComicBookAccess : BaseAccess, Abstract.ICustomerComicBookSeriesAccess
-    {
+    //public class CustomerComicBookAccess : BaseAccess, Abstract.ICustomerComicBookSeriesAccess
+    //{
 
-        public List<CustomerComicBookSeries> LoadComicBookSeriesForCustomer(Guid customerId, DateTime searchDate)
-        {
-            using (SqlConnection connection = GetOpenConnection())
-            {
-                return connection.Query<CustomerComicBookSeries>("spCustomerComicBookSeriesGetCustomerComicBookSeries", 
-                    new { CustomerId = customerId, SearchDate = searchDate }, commandType: CommandType.StoredProcedure).ToList();
-            }
-        }
+    //    public List<CustomerComicBookSeries> LoadComicBookSeriesForCustomer(Guid customerId, DateTime searchDate)
+    //    {
+    //        using (SqlConnection connection = GetOpenConnection())
+    //        {
+    //            return connection.Query<CustomerComicBookSeries>("spCustomerComicBookSeriesGetCustomerComicBookSeries", 
+    //                new { CustomerId = customerId, SearchDate = searchDate }, commandType: CommandType.StoredProcedure).ToList();
+    //        }
+    //    }
 
-        public CustomerComicBookSeries LoadCustomerComicBookSeries(Guid customerComicBookSeriesId)
-        {
-            using (SqlConnection connection = GetOpenConnection())
-            {
-                return connection.Query<CustomerComicBookSeries>("spCustomerComicBookSeriesGetCustomerComicBookSeries", 
-                    new { CustomerComicBookSeriesId = customerComicBookSeriesId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
-            }
-        }
+    //    public CustomerComicBookSeries LoadCustomerComicBookSeries(Guid customerComicBookSeriesId)
+    //    {
+    //        using (SqlConnection connection = GetOpenConnection())
+    //        {
+    //            return connection.Query<CustomerComicBookSeries>("spCustomerComicBookSeriesGetCustomerComicBookSeries", 
+    //                new { CustomerComicBookSeriesId = customerComicBookSeriesId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+    //        }
+    //    }
 
-        public bool AddCustomerComicBookSeries(CustomerComicBookSeries customerSeries)
-        {
-            throw new NotImplementedException();
-        }
+    //    public bool AddCustomerComicBookSeries(CustomerComicBookSeries customerSeries)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
 
-        public bool RemoveCustomerComicBookSeries(CustomerComicBookSeries customerSeries)
-        {
-            throw new NotImplementedException();
-        }
-    }
+    //    public bool RemoveCustomerComicBookSeries(CustomerComicBookSeries customerSeries)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
 }
