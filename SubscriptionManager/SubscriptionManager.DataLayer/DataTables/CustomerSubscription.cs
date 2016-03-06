@@ -23,20 +23,18 @@ namespace SubscriptionManager.DataLayer.DataTables
         public DateTime EffectiveDate { get; set; }
         public DateTime ExpiresDate { get; set; }
 
-        public DynamicParameters GetParametersForAdd()
-        {
-            throw new NotImplementedException();
-        }
-
-        public DynamicParameters GetParametersForRemove()
+        public DynamicParameters GetParametersForSave()
         {
             DynamicParameters parameters = new DynamicParameters();
 
             parameters.Add("@CustomerSubscriptionId", this.CustomerSubscriptionId, dbType: DbType.Guid);
+            parameters.Add("@CustomerId", this.CustomerId, dbType: DbType.Guid);
+            parameters.Add("@ComicBookSeriesId", this.ComicBookSeriesId, dbType: DbType.Guid);
+            parameters.Add("@EffectiveDate", this.EffectiveDate, dbType: DbType.DateTime);
             parameters.Add("@ExpiresDate", this.ExpiresDate, dbType: DbType.DateTime);
-            parameters.Add("@DeleteDate", this.DeleteDate, dbType: DbType.DateTime);
-            parameters.Add("@UserId", this.ChangeUserId, dbType: DbType.Guid);
+            parameters.Add("@ChangeUserId", this.ChangeUserId, dbType: DbType.Guid);
             parameters.Add("@ChangeDate", this.ChangeDate, dbType: DbType.DateTime);
+            parameters.Add("@DeleteDate", this.DeleteDate, dbType: DbType.DateTime);
 
             return parameters;
         }

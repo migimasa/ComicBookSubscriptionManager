@@ -15,38 +15,15 @@
         });
     }
 
-    self.removeSubscription = function (comicBookSeries, event, temp, temp2, temp3) {
-        var removePostUrl = $('#RemoveSubscriptionURL').val();
+    self.removeSubscription = function (comicBookSeries, event) {
 
-        var postData = {
-            customerId: comicBookSeries.customerId,
-            comicBookSeriesId: comicBookSeries.comicBookSeriesId
+        if (confirmRemovalByUser(comicBookSeries.comicBookSeriesTitle)) {
+            postToRemoveComicBookSeries(comicBookSeries);
         }
-
-        $.ajax({
-            url: removePostUrl,
-            type: 'POST',
-            data: postData,
-            success: function (removeResult) {
-                var alertHtml = getAlertHtml(comicBookSeries.comicBookSeriesTitle);
-
-                $('#alert-div').html(alertHtml);
-
-                $('#alert-div').show();
-            }
-        });
-
-        //library contains customerId, comicBookSeriesId
-
-        //write ajax post to remove subscription
-
-
-
-
     }
 }
 
-function getAlertHtml(comicBookSeriesTitle) {
+function getSuccessAlertHtml(comicBookSeriesTitle) {
     var html = '';
 
     html += '<div class="alert alert-dismissible alert-success" role="alert">';
@@ -58,14 +35,35 @@ function getAlertHtml(comicBookSeriesTitle) {
     return html;
 }
 
-function temp(comicBookSeriesTitle) {
-    var html = '';
+function confirmRemovalByUser(comicBookSeriesTitle) {
 
-    html += '<div class="modal">';
-    html += '<div class="modal-dialog'
+    if (confirm('Are you sure you would like to remove ' + comicBookSeriesTitle + '?')) {
+        return true;
+    }
+    return false;
+}
+
+function postToRemoveComicBookSeries(comicBookSeries) {
+    var removePostUrl = $('#RemoveSubscriptionURL').val();
+
+    var postData = {
+        customerId: comicBookSeries.customerId,
+        comicBookSeriesId: comicBookSeries.comicBookSeriesId
+    }
+
+    $.ajax({
+        url: removePostUrl,
+        type: 'POST',
+        data: postData,
+        success: function (removeResult) {
+            location.reload();
 
 
-    html += '</div>';
+            var alertHtml = getSuccessAlertHtml(comicBookSeries.comicBookSeriesTitle);
 
-    return html;
+            $('#alert-div').html(alertHtml);
+
+            $('#alert-div').show();
+        }
+    });
 }

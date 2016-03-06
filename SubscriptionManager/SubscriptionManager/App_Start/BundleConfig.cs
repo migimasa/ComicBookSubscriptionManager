@@ -35,6 +35,8 @@ namespace SubscriptionManager
                         "~/Content/DataTables/css/dataTables.bootstrap.css"));
             bundles.Add(new ScriptBundle("~/bundles/KnockoutJS").Include(
                         "~/Scripts/knockout-3.3.0.js"));
+            bundles.Add(new ScriptBundle("~/bundles/Base").Include(
+                "~/Scripts/Base/SubscriptionManagerBase.js"));
         }
     }
 }

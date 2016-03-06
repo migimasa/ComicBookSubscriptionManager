@@ -153,11 +153,9 @@ namespace SubscriptionManager.Controllers
         [HttpPost]
         public ActionResult RemoveSubscription(Guid customerId, Guid comicBookSeriesId)
         {
-            //var customerSubscriptions = new Domain.ComicBookSeriesManagement.Subscriptions(customerId, DateTime.UtcNow);
+            var customerSubscriptions = new Domain.ComicBookSeriesManagement.Subscriptions(customerId, DateTime.UtcNow);
 
-            //var removeResult = customerSubscriptions.RemoveSubscription(comicBookSeriesId, Guid.Empty);
-
-            var removeResult = new Migi.Framework.Models.ChangeResult();
+            var removeResult = customerSubscriptions.RemoveSubscription(comicBookSeriesId, Guid.Empty);
 
             return Json(new { IsSuccess = removeResult.IsSuccess, ErrorMessages = removeResult.ErrorMessages });
         }

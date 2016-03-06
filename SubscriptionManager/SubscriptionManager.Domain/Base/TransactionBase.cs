@@ -19,11 +19,13 @@ namespace SubscriptionManager.Domain.Base
         {
             get
             {
-                if (this._wrapper == null)
-                {
-                    this._wrapper = new TransactionScopeWrapper(this._transactionScope);
-                }
-                return this._wrapper;
+                //if (this._wrapper == null)
+                //{
+                //    this._wrapper = new TransactionScopeWrapper(this._transactionScope);
+                //}
+                //return this._wrapper;
+
+                return new TransactionScopeWrapper(new TransactionScope());
             }
         }
         public TransactionBase()

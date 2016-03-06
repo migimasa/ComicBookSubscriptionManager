@@ -41,32 +41,14 @@ namespace SubscriptionManager.DataLayer.Access
             return subscription;
         }
 
-        public bool AddSubscription(CustomerSubscription subscription)
+        public bool SaveSubscription(CustomerSubscription subscription)
         {
-            bool addSuccessful = false;
-
             using (SqlConnection connection = GetOpenConnection())
             {
-                int rowsAffected = connection.Execute("spCustomerSubscriptionAddSubscription", param: subscription.GetParametersForAdd(), commandType: CommandType.StoredProcedure);
+                int rowsAffected = connection.Execute("spCustomerSubscriptionSaveSubscription", param: subscription.GetParametersForSave(), commandType: CommandType.StoredProcedure);
 
-                addSuccessful = (rowsAffected == 1);
+                return rowsAffected > 0;
             }
-
-            return addSuccessful;
-        }
-
-        public bool RemoveSubscription(CustomerSubscription subscription)
-        {
-            bool removeSuccessful = false;
-
-            using (SqlConnection connection = GetOpenConnection())
-            {
-                int rowsAffected = connection.Execute("spCustomerSubscriptionRemoveSubscription", param: subscription.GetParametersForRemove(), commandType: CommandType.StoredProcedure);
-
-                removeSuccessful = (rowsAffected == 1);
-            }
-
-            return removeSuccessful;
         }
     }
 }

@@ -40,18 +40,18 @@ namespace SubscriptionManager.Domain.CustomerManagement
             }
         }
 
-        private SubscriptionManager.Domain.ComicBookSeriesManagement.Subscriptions _subscriptions;
-        public SubscriptionManager.Domain.ComicBookSeriesManagement.Subscriptions Subscriptions
-        {
-            get
-            {
-                if (_subscriptions == null)
-                {
-                    _subscriptions = new ComicBookSeriesManagement.Subscriptions(this.CustomerId, this.SearchDate);
-                }
-                return _subscriptions;
-            }
-        }
+        //private SubscriptionManager.Domain.ComicBookSeriesManagement.Subscriptions _subscriptions;
+        //public SubscriptionManager.Domain.ComicBookSeriesManagement.Subscriptions Subscriptions
+        //{
+        //    get
+        //    {
+        //        if (_subscriptions == null)
+        //        {
+        //            _subscriptions = new ComicBookSeriesManagement.Subscriptions(this.CustomerId, this.SearchDate);
+        //        }
+        //        return _subscriptions;
+        //    }
+        //}
 
         private DateTime SearchDate { get; set; }
 
@@ -194,36 +194,39 @@ namespace SubscriptionManager.Domain.CustomerManagement
 
             if (result.IsSuccess)
             {
-
                 ICustomerAccess customerDl = new DataLayer.Access.CustomerAccess();
 
-                Guid newCustomerId = Guid.NewGuid();
+                using (ITransactionScope scope = new TransactionScopeWrapper(new System.Transactions.TransactionScope()))
+                {
+                    Guid newCustomerId = Guid.NewGuid();
 
-                var createCustomerDl = new DataLayer.DataTables.Customer()
-                {
-                    ChangeDate = DateTime.UtcNow,
-                    ChangeUserId = customerToCreate.UserId,
-                    City = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.City),
-                    CreateDate = DateTime.UtcNow,
-                    CreateUserId = customerToCreate.UserId,
-                    CustomerId = newCustomerId,
-                    DeleteDate = null,
-                    EmailAddress = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.EmailAddress),
-                    FirstName = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.FirstName),
-                    LastName = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.LastName),
-                    PhoneNumber = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.PhoneNumber),
-                    State = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.State),
-                    StoreId = customerToCreate.StoreId,
-                    ZipCode = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.ZipCode)
-                };
+                    var createCustomerDl = new DataLayer.DataTables.Customer()
+                    {
+                        ChangeDate = DateTime.UtcNow,
+                        ChangeUserId = customerToCreate.UserId,
+                        City = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.City),
+                        CreateDate = DateTime.UtcNow,
+                        CreateUserId = customerToCreate.UserId,
+                        CustomerId = newCustomerId,
+                        DeleteDate = null,
+                        EmailAddress = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.EmailAddress),
+                        FirstName = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.FirstName),
+                        LastName = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.LastName),
+                        PhoneNumber = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.PhoneNumber),
+                        State = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.State),
+                        StoreId = customerToCreate.StoreId,
+                        ZipCode = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.ZipCode)
+                    };
 
-                if (customerDl.CreateCustomer(createCustomerDl))
-                {
-                    result.CustomerId = newCustomerId;
-                }
-                else
-                {
-                    result.AddErrorMessage("Could not save Customer.");
+                    if (customerDl.CreateCustomer(createCustomerDl))
+                    {
+                        result.CustomerId = newCustomerId;
+                    }
+                    else
+                    {
+                        result.AddErrorMessage("Could not save Customer.");
+                    }
+                    scope.Complete();
                 }
             }
             return result;
