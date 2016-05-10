@@ -8,6 +8,7 @@ using SubscriptionManager.DataLayer.DataTables;
 using SubscriptionManager.DataLayer.Access;
 
 using Ninject;
+using DapperWrapper;
 
 namespace SubscriptionManager.Domain.CustomerManagement
 {
@@ -37,9 +38,8 @@ namespace SubscriptionManager.Domain.CustomerManagement
             get
             {
                 if (_subscriptionAccess == null)
-                {
                     _subscriptionAccess = new CustomerSubscriptionAccess();
-                }
+
                 return _subscriptionAccess;
             }
         }
@@ -61,7 +61,7 @@ namespace SubscriptionManager.Domain.CustomerManagement
 
         private void Instantiate(CustomerSubscription subscriptionDl)
         {
-            
+
             this.HasData = false;
 
             if (subscriptionDl != null)

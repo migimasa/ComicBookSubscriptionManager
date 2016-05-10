@@ -57,13 +57,13 @@ namespace SubscriptionManager.Models.Customer
             }
         }
 
-        public Subscription(Domain.ComicBookSeriesManagement.Subscription subscription)
+        public Subscription(Domain.CustomerManagement.Subscription subscription)
         {
-            this.SubscriptionId = subscription.CustomerSubscriptionId;
+            this.SubscriptionId = subscription.SubscriptionId;
             this.CustomerId = subscription.CustomerId;
             this.ComicBookSeriesId = subscription.ComicBookSeriesId;
             this.PublisherName = subscription.PublisherName;
-            this.ComicBookSeriesTitle = subscription.ComicBookSeriesTitle;
+            this.ComicBookSeriesTitle = subscription.SeriesTitle;
             this.EffectiveDate = subscription.EffectiveDate;
             this.ExpiresDate = subscription.ExpiresDate;
         }

@@ -95,7 +95,6 @@ namespace SubscriptionManager.Domain.ComicBookSeriesManagement
                     }
 
                     scope.Complete();
-                    scope.Dispose();
                 }
             }
             return result;

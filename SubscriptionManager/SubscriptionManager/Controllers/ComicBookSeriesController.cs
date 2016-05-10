@@ -44,10 +44,5 @@ namespace SubscriptionManager.Controllers
 
             return Json(new { data = comicBookSeriesViewModel });
         }
-
-        public ActionResult SeriesSearch()
-        {
-            return View();
-        }
     }
 }

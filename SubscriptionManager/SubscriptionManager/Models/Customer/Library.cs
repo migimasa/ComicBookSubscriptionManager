@@ -9,7 +9,8 @@ namespace SubscriptionManager.Models.Customer
 {
     public class Library
     {
-        private Guid CustomerId { get; set; }
+        [JsonProperty(PropertyName="customerId")]
+        public Guid CustomerId { get; set; }
         private DateTime SearchDate { get; set; }
         
         //list of subscriptions
@@ -38,9 +39,9 @@ namespace SubscriptionManager.Models.Customer
         {
             List<Subscription> subscriptions = new List<Subscription>();
 
-            Domain.ComicBookSeriesManagement.Subscriptions customerSubscriptions = new Domain.ComicBookSeriesManagement.Subscriptions(this.CustomerId, this.SearchDate);
+            Domain.CustomerManagement.Library customerLibrary = new Domain.CustomerManagement.Library(this.CustomerId, Migi.Framework.Helper.Search.GetUTCEndOfDaySearchDate(this.SearchDate));
 
-            foreach (var subscription in customerSubscriptions)
+            foreach (var subscription in customerLibrary.Subscriptions)
             {
                 subscriptions.Add(new Subscription(subscription));
             }

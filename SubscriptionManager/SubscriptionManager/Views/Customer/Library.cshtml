@@ -11,7 +11,8 @@
 
 
 <div class="pull-right form-group">
-    <a data-bind="click:showAddSubscriptionModal" href="" class="btn btn-primary">Add Subscription</a>
+    @*<a data-bind="click: showManageLibraryScreen, attr { '@Url.Action("ManageLibrary")/' + customerId }" class="btn btn-primary">Add Subscription</a>*@
+    <a href="@Url.Action("ManageLibrary", "Customer")/@Model.CustomerId" class="btn btn-primary">Add Subscription</a>
 </div>
 
 <table class="table table-hover table-bordered" id="SubscriptionTable">

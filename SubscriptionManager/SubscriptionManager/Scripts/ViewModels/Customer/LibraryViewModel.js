@@ -4,15 +4,8 @@
     self.library = library;
     self.subscriptions = library.subscriptions;
 
-    self.showAddSubscriptionModal = function (data, event) {
-        self.sending = ko.observable(false);
-
-        $.get($(event.target).attr('href'), function (d) {
-            $('.body-content').prepend(d);
-            $('#').modal('show');
-
-            ko.applyBindings(self, document.getElementById(''));
-        });
+    self.showManageLibraryScreen = function (data, event) {
+        var s = '';
     }
 
     self.removeSubscription = function (comicBookSeries, event) {
@@ -48,7 +41,7 @@ function postToRemoveComicBookSeries(comicBookSeries) {
 
     var postData = {
         customerId: comicBookSeries.customerId,
-        comicBookSeriesId: comicBookSeries.comicBookSeriesId
+        subscriptionId: comicBookSeries.customerSubscriptionId
     }
 
     $.ajax({
@@ -57,13 +50,6 @@ function postToRemoveComicBookSeries(comicBookSeries) {
         data: postData,
         success: function (removeResult) {
             location.reload();
-
-
-            var alertHtml = getSuccessAlertHtml(comicBookSeries.comicBookSeriesTitle);
-
-            $('#alert-div').html(alertHtml);
-
-            $('#alert-div').show();
         }
     });
 }

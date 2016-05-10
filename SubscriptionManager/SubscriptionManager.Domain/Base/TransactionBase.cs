@@ -14,23 +14,16 @@ namespace SubscriptionManager.Domain.Base
     {
         private TransactionScope _transactionScope;
 
-        private TransactionScopeWrapper _wrapper;
         public TransactionScopeWrapper TransactionScopeWrapper
         {
             get
             {
-                //if (this._wrapper == null)
-                //{
-                //    this._wrapper = new TransactionScopeWrapper(this._transactionScope);
-                //}
-                //return this._wrapper;
-
-                return new TransactionScopeWrapper(new TransactionScope());
+                return new TransactionScopeWrapper(this._transactionScope);
             }
         }
         public TransactionBase()
         {
-            this._transactionScope = new TransactionScope();
+            this._transactionScope = new TransactionScope(TransactionScopeOption.RequiresNew);
         }
 
     }

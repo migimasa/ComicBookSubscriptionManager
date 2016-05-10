@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DapperWrapper;
 using SubscriptionManager.DataLayer.Abstract;
 using SubscriptionManager.DataLayer.Access;
 using SubscriptionManager.DataLayer.DataTables;
@@ -13,6 +14,7 @@ namespace SubscriptionManager.Domain.CustomerManagement
     {
         private Guid CustomerId { get; set; }
         private DateTime SearchDate { get; set; }
+        private bool ShowRemovedSubscriptions { get; set; }
 
         private ICustomerSubscriptionAccess _subscriptionAccess;
         private ICustomerSubscriptionAccess SubscriptionAccess
@@ -40,10 +42,21 @@ namespace SubscriptionManager.Domain.CustomerManagement
             }
         }
 
-        public Library(Guid customerId, DateTime searchDate)
+        public Library(Guid customerId, DateTime searchDate, bool showRemovedSubscriptions)
         {
             this.CustomerId = customerId;
             this.SearchDate = searchDate;
+            this.ShowRemovedSubscriptions = showRemovedSubscriptions;
+        }
+        public Library(Guid customerId, DateTime searchDate)
+            : this(customerId, searchDate, false)
+        {
+
+        }
+
+        public Subscription GetSubscription(Guid subscriptionId)
+        {
+            return this.Subscriptions.Where(x => x.SubscriptionId == subscriptionId).FirstOrDefault();
         }
 
         private List<Subscription> GetCustomerSubscriptions()
@@ -54,9 +67,23 @@ namespace SubscriptionManager.Domain.CustomerManagement
 
             foreach (CustomerSubscription subscription in customerSubscriptions)
             {
-                subscriptions.Add(new Subscription(subscription));
+                if (IsSubscriptionThatNeedsToBeShown(subscription))
+                {
+                    subscriptions.Add(new Subscription(subscription));
+                }
             }
             return subscriptions;
+        }
+
+        private bool IsSubscriptionThatNeedsToBeShown(CustomerSubscription subscription)
+        {
+            bool showSubscription = true;
+
+            if (!this.ShowRemovedSubscriptions && subscription.DeleteDate.HasValue)
+            {
+                showSubscription = false;
+            }
+            return showSubscription;
         }
 
         public Migi.Framework.Models.ChangeResult AddSubscription(Guid comicBookSeriesId, Guid userId)
@@ -68,10 +95,31 @@ namespace SubscriptionManager.Domain.CustomerManagement
                 Subscription subscription = Subscription.GetNewSubscription(this.CustomerId, comicBookSeriesId, userId);
 
                 result = subscription.Save();
+
+                ClearSubscriptionsForRefresh();
             }
             else
             {
                 result.AddErrorMessage("Customer is already subscribed.");
+            }
+
+
+            return result;
+        }
+
+        public Migi.Framework.Models.ChangeResult RemoveSubscription(Guid subscriptionId, Guid userId)
+        {
+            Migi.Framework.Models.ChangeResult result = new Migi.Framework.Models.ChangeResult();
+
+            Subscription subscriptionToRemove = GetSubscription(subscriptionId);
+
+            if (subscriptionToRemove != null)
+            {
+                result = subscriptionToRemove.Remove(userId);
+            }
+            else
+            {
+                result.AddErrorMessage("Cannot remove subscription.");
             }
 
             return result;
@@ -81,7 +129,15 @@ namespace SubscriptionManager.Domain.CustomerManagement
         {
             List<Guid> customerComicBookSeriesIds = this.Subscriptions.Select(x => x.ComicBookSeriesId).ToList();
 
-            return customerComicBookSeriesIds.Contains(comicBookSeriesId);            
+            return customerComicBookSeriesIds.Contains(comicBookSeriesId);
+        }
+
+        private void ClearSubscriptionsForRefresh()
+        {
+            if (this._subscriptions != null)
+            {
+                this._subscriptions = null;
+            }
         }
 
     }

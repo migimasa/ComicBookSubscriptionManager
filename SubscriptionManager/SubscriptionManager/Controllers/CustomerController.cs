@@ -140,22 +140,43 @@ namespace SubscriptionManager.Controllers
             return new HttpNotFoundResult();
         }
 
+        [HttpGet]
+        public ActionResult ManageLibrary(string id)
+        {
+            Guid? customerId = Migi.Framework.Helper.Types.GetNullableGuid(id);
+
+            if (customerId.HasValue)
+            {
+                Models.Customer.ManageCustomerLibrary viewModel = new Models.Customer.ManageCustomerLibrary(customerId.Value);
+                return View(viewModel);
+            }
+            return new HttpNotFoundResult();
+        }
+
+        [HttpPost]
+        public ActionResult _getManageLibraryData(Guid customerId, Guid? publisherId)
+        {
+            Models.Customer.ManageLibraryTableData tableData = new Models.Customer.ManageLibraryTableData(customerId, publisherId, DateTime.Today);
+
+            return Json(new { data = tableData.Series });
+        }
+
         [HttpPost]
         public ActionResult AddSubscription(Guid customerId, Guid comicBookSeriesId)
         {
-            var customerSubscriptions = new Domain.ComicBookSeriesManagement.Subscriptions(customerId, DateTime.UtcNow);
+            var customerLibrary = new Domain.CustomerManagement.Library(customerId, DateTime.UtcNow);
 
-            var addResult = customerSubscriptions.AddSubscription(comicBookSeriesId, Guid.Empty);
+            var addResult = customerLibrary.AddSubscription(comicBookSeriesId, Guid.Empty);
 
             return Json(new { IsSuccess = addResult.IsSuccess, ErrorMessages = addResult.ErrorMessages });
         }
 
         [HttpPost]
-        public ActionResult RemoveSubscription(Guid customerId, Guid comicBookSeriesId)
+        public ActionResult RemoveSubscription(Guid customerId, Guid subscriptionId)
         {
-            var customerSubscriptions = new Domain.ComicBookSeriesManagement.Subscriptions(customerId, DateTime.UtcNow);
+            var customerLibrary = new Domain.CustomerManagement.Library(customerId, DateTime.UtcNow);
 
-            var removeResult = customerSubscriptions.RemoveSubscription(comicBookSeriesId, Guid.Empty);
+            var removeResult = customerLibrary.RemoveSubscription(subscriptionId, Guid.Empty);
 
             return Json(new { IsSuccess = removeResult.IsSuccess, ErrorMessages = removeResult.ErrorMessages });
         }

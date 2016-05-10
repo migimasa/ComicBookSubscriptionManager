@@ -1,0 +1,32 @@
+﻿@model SubscriptionManager.Models.Customer.ManageCustomerLibrary
+
+@{
+    ViewBag.Title = "Manage Subscriptions";
+}
+
+@Html.Hidden("AddSubscriptionPostUrl", Url.Action("AddSubscription", "Customer", new { }, this.Request.Url.Scheme))
+@Html.Hidden("RemoveSubscriptionPostUrl", Url.Action("RemoveSubscription", "Customer", new { }, this.Request.Url.Scheme))
+
+@Html.Hidden("Get_getManageLibraryDataURL", Url.Action("_getManageLibraryData"))
+@Html.HiddenFor(x => x.CustomerId)
+
+<h2>Manage Subscriptions</h2>
+
+<div class="form-group">
+    @Html.LabelFor(x => x.PublisherSelectList, new { @class = "col-sm-1 control-label" })
+    @Html.DropDownList("PublisherSelectList", Model.PublisherSelectList, "All", new { @class = "form-control" })
+</div>
+
+
+<table class="table table-hover table-bordered" id="comic-book-series-table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/Customer/ManageLibrary.js")
+}
