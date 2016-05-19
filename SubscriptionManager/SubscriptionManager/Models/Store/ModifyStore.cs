@@ -29,7 +29,7 @@ namespace SubscriptionManager.Models.Store
         public string EmailAddress { get; set; }
 
 
-        public ModifyStore(Domain.StoreManagement.Store store)
+        public ModifyStore(Domain.StoreManagement.IStore store)
         {
             if (store != null && store.HasData)
             {

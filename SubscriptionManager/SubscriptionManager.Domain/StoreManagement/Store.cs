@@ -4,10 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SubscriptionManager.DataLayer.Abstract;
+using SubscriptionManager.Domain.Abstract;
+using Ninject;
 
 namespace SubscriptionManager.Domain.StoreManagement
 {
-    public class Store
+    public interface IStore
+    {
+        bool HasData { get; }
+        Guid StoreId { get; }
+        string StoreName { get; }
+        string AddressOne { get; }
+        string AddressTwo { get; }
+        string City { get; }
+        string State { get; }
+        string ZipCode { get; }
+        string PhoneNumber { get; }
+        string EmailAddress { get; }
+
+        List<ICustomer> Customers { get; }
+    }
+
+
+    public class Store : IStore
     {
         public bool HasData { get; set; }
         public Guid StoreId { get; set; }
@@ -33,16 +52,15 @@ namespace SubscriptionManager.Domain.StoreManagement
             }
         }
 
-        private List<CustomerManagement.Customer> _customers;
-        public List<CustomerManagement.Customer> Customers
+        [Inject]
+        public IClientele _clientele { private get; set; }
+
+
+        public List<ICustomer> Customers
         {
             get
             {
-                if (_customers == null)
-                {
-                    _customers = new CustomerManagement.Customers().GetCustomersForStore(this.StoreId);
-                }
-                return _customers;
+                return _clientele.GetCustomersForStore(StoreId);
             }
         }
 
@@ -72,32 +90,6 @@ namespace SubscriptionManager.Domain.StoreManagement
             this.ZipCode = store.ZipCode;
             this.PhoneNumber = store.PhoneNumber;
             this.EmailAddress = store.EmailAddress;
-        }
-
-        public Migi.Framework.Models.ChangeResult Save()
-        {
-            Migi.Framework.Models.ChangeResult result = new Migi.Framework.Models.ChangeResult();
-
-            throw new NotImplementedException();
-
-            //return result;
-        }
-
-        public class CreateStore
-        {
-            public string Name { get; set; }
-            public string AddressOne { get; set; }
-            public string AddressTwo { get; set; }
-            public string City { get; set; }
-            public string State { get; set; }
-            public string ZipCode { get; set; }
-            public string PhoneNumber { get; set; }
-            public string EmailAddress { get; set; } 
-        }
-
-        public static Migi.Framework.Models.ChangeResult CreateNewStore(CreateStore storeToCreate)
-        {
-            throw new NotImplementedException();
         }
     }
 }

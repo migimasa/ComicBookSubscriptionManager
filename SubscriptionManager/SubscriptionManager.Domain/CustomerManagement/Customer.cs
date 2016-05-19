@@ -7,10 +7,11 @@ using SubscriptionManager.DataLayer.Abstract;
 
 using DapperWrapper;
 using System.Transactions;
+using SubscriptionManager.Domain.Abstract;
 
 namespace SubscriptionManager.Domain.CustomerManagement
 {
-    public class Customer
+    public class Customer : ICustomer
     {
         public bool HasData { get; set; }
         public Guid CustomerId { get; set; }

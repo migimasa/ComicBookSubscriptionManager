@@ -4,11 +4,19 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SubscriptionManager.Domain.CustomerManagement;
+using SubscriptionManager.Domain.Abstract;
 
 namespace SubscriptionManager.Controllers
 {
     public class CustomerController : Controller
     {
+        private IClientele _customers;
+
+        public CustomerController(IClientele customers)
+        {
+            _customers = customers;
+        }
+
         // GET: Customer
         public ActionResult Index()
         {
@@ -39,12 +47,8 @@ namespace SubscriptionManager.Controllers
             Guid? storeId = Migi.Framework.Helper.Types.GetNullableGuid(id);
 
             if (storeId.HasValue)
-            {
-                Customers customersLoader = new Domain.CustomerManagement.Customers();
+                return View(new Models.Customer.Customers(storeId.Value, _customers.GetCustomersForStore(storeId.Value)));
 
-                Models.Customer.Customers customersViewModel = new Models.Customer.Customers(storeId.Value, customersLoader.GetCustomersForStore(storeId.Value));
-                return View(customersViewModel);
-            }
             return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
         }
 
@@ -56,9 +60,7 @@ namespace SubscriptionManager.Controllers
             Customer customer = null;
 
             if (customerId.HasValue)
-            {
                 customer = new Customer(customerId.Value);
-            }
 
             Models.Customer.Customer model = new Models.Customer.Customer(storeId, customer);
             return View(model);
@@ -102,8 +104,6 @@ namespace SubscriptionManager.Controllers
                 else
                 {
                     //create new
-                    Customers customers = new Customers();
-
                     var result = Customer.CreateNewCustomer(new Customer.CustomerCreate()
                     {
                         City = model.City,

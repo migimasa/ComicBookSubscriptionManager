@@ -6,26 +6,25 @@ using System.Threading.Tasks;
 using SubscriptionManager.DataLayer.Abstract;
 using SubscriptionManager.DataLayer.DataTables;
 using Migi.Framework.Helper;
+using SubscriptionManager.Domain.Abstract;
 
 namespace SubscriptionManager.Domain.CustomerManagement
 {
-    public class Customers
+    public class Customers : IClientele
     {
-        private DataLayer.Abstract.ICustomerAccess _customerAccess;
+        private ICustomerAccess _customerAccess;
 
-        public Customers()
+        public Customers(ICustomerAccess customerAccess)
         {
-            this._customerAccess = new DataLayer.Access.CustomerAccess();
+            _customerAccess = customerAccess;
         }
 
-        public List<Customer> GetCustomersForStore(Guid storeId)
+        public List<ICustomer> GetCustomersForStore(Guid storeId)
         {
-            List<Customer> customers = new List<Customer>();
+            List<ICustomer> customers = new List<ICustomer>();
 
             foreach (var customerDl in _customerAccess.LoadCustomersForStore(storeId))
-            {
                 customers.Add(new Customer(customerDl));
-            }
 
             return customers;
         }

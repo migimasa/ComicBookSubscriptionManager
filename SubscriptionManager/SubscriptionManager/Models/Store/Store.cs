@@ -18,30 +18,37 @@ namespace SubscriptionManager.Models.Store
         public string PhoneNumber { get; private set; }
         public string EmailAddress { get; private set; }
 
-        public List<Customer.Customer> Customers { get; set; }
-
-        public Store(Domain.StoreManagement.Store store)
-        {
-            this.StoreId = store.StoreId;
-            this.StoreName = store.StoreName;
-            this.AddressOne = store.AddressOne;
-            this.AddressTwo = store.AddressTwo;
-            this.City = store.City;
-            this.State = store.State;
-            this.ZipCode = store.ZipCode;
-            this.PhoneNumber = store.PhoneNumber;
-            this.EmailAddress = store.EmailAddress;
-
-            FillCustomers(store);
+        private List<Customer.Customer> _customers;
+        public List<Customer.Customer> Customers { get
+            {
+                if (_customers == null)
+                    FillCustomers(StoreInformation);
+                return _customers;
+            }
         }
 
-        private void FillCustomers(Domain.StoreManagement.Store store)
+        private Domain.StoreManagement.IStore StoreInformation { get; set; }
+
+        public Store(Domain.StoreManagement.IStore store)
         {
-            this.Customers = new List<Customer.Customer>();
+            StoreId = store.StoreId;
+            StoreName = store.StoreName;
+            AddressOne = store.AddressOne;
+            AddressTwo = store.AddressTwo;
+            City = store.City;
+            State = store.State;
+            ZipCode = store.ZipCode;
+            PhoneNumber = store.PhoneNumber;
+            EmailAddress = store.EmailAddress;
+
+            StoreInformation = store;
+        }
+
+        private void FillCustomers(Domain.StoreManagement.IStore store)
+        {
+            _customers = new List<Customer.Customer>();
             foreach (var customer in store.Customers)
-            {
-                this.Customers.Add(new Customer.Customer(customer.StoreId, customer));
-            }
+                _customers.Add(new Customer.Customer(customer.StoreId, customer));
         }
     }
 }

@@ -52,6 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IClientele.cs" />
+    <Compile Include="Abstract\ICustomer.cs" />
     <Compile Include="Base\Helper.cs" />
     <Compile Include="Base\TransactionBase.cs" />
     <Compile Include="ComicBookSeriesManagement\Publishers.cs" />

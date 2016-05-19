@@ -14,7 +14,7 @@ namespace SubscriptionManager.Models.Customer
 
         }
 
-        public Customers(Guid storeId, List<Domain.CustomerManagement.Customer> list)
+        public Customers(Guid storeId, List<Domain.Abstract.ICustomer> list)
         {
             this.StoreId = storeId;
             foreach (var cust in list)

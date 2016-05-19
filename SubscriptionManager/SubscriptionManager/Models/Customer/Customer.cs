@@ -57,7 +57,7 @@ namespace SubscriptionManager.Models.Customer
 
         public Customer() { }
 
-        public Customer(Guid storeId, SubscriptionManager.Domain.CustomerManagement.Customer customer)
+        public Customer(Guid storeId, SubscriptionManager.Domain.Abstract.ICustomer customer)
         {
             this.StoreId = storeId;
             if (customer != null && customer.HasData)
@@ -70,7 +70,7 @@ namespace SubscriptionManager.Models.Customer
             }
         }
 
-        private void FillCustomerProperties(SubscriptionManager.Domain.CustomerManagement.Customer customer)
+        private void FillCustomerProperties(SubscriptionManager.Domain.Abstract.ICustomer customer)
         {
             this.CustomerId = customer.CustomerId;
             this.FirstName = customer.FirstName;
