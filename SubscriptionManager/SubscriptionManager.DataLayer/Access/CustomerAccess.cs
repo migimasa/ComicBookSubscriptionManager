@@ -11,6 +11,7 @@ namespace SubscriptionManager.DataLayer.Access
 {
     public class CustomerAccess : BaseAccess, Abstract.ICustomerAccess
     {
+        public CustomerAccess(Abstract.IAccess access) : base(access) { }
         public List<Customer> LoadCustomersForStore(Guid storeId)
         {
             using (SqlConnection connection = GetOpenConnection())
@@ -27,23 +28,32 @@ namespace SubscriptionManager.DataLayer.Access
             }
         }
 
-        public bool CreateCustomer(Customer customer)
+        //public bool CreateCustomer(Customer customer)
+        //{
+        //    using (SqlConnection connection = GetOpenConnection())
+        //    {
+        //        int rowsAffected = connection.Execute("spCustomerCreateCustomer", param: customer.GetParametersForCreate(), commandType: CommandType.StoredProcedure);
+
+        //        return rowsAffected > 0;
+        //    }
+        //}
+
+        //public bool ModifyCustomer(Customer customer)
+        //{
+        //    using (SqlConnection connection = GetOpenConnection())
+        //    {
+        //        int rowsAffected = connection.Execute("spCustomerUpdateCustomer", param: customer.GetParametersForUpdate(), commandType: CommandType.StoredProcedure);
+
+        //        return rowsAffected > 0;
+        //    }
+        //}
+        public bool SaveCustomer(Customer customer)
         {
             using (SqlConnection connection = GetOpenConnection())
             {
-                int rowsAffected = connection.Execute("spCustomerCreateCustomer", param: customer.GetParametersForCreate(), commandType: CommandType.StoredProcedure);
+                int rowsEffected = connection.Execute("spCustomerSaveCustomer", param: customer.GetParametersForCreate(), commandType: CommandType.StoredProcedure);
 
-                return rowsAffected > 0;
-            }
-        }
-
-        public bool ModifyCustomer(Customer customer)
-        {
-            using (SqlConnection connection = GetOpenConnection())
-            {
-                int rowsAffected = connection.Execute("spCustomerUpdateCustomer", param: customer.GetParametersForUpdate(), commandType: CommandType.StoredProcedure);
-
-                return rowsAffected > 0;
+                return rowsEffected > 0;
             }
         }
 

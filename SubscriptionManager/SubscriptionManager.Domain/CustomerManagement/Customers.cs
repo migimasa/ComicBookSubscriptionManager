@@ -10,23 +10,23 @@ using SubscriptionManager.Domain.Abstract;
 
 namespace SubscriptionManager.Domain.CustomerManagement
 {
-    public class Customers : IClientele
+    public class Customers
     {
-        private ICustomerAccess _customerAccess;
+        //private ICustomerAccess _customerAccess;
 
-        public Customers(ICustomerAccess customerAccess)
-        {
-            _customerAccess = customerAccess;
-        }
+        //public Customers(ICustomerAccess customerAccess)
+        //{
+        //    _customerAccess = customerAccess;
+        //}
 
-        public List<ICustomer> GetCustomersForStore(Guid storeId)
-        {
-            List<ICustomer> customers = new List<ICustomer>();
+        //public List<ICustomer> GetCustomersForStore(Guid storeId)
+        //{
+        //    List<ICustomer> customers = new List<ICustomer>();
 
-            foreach (var customerDl in _customerAccess.LoadCustomersForStore(storeId))
-                customers.Add(new Customer(customerDl));
+        //    foreach (var customerDl in _customerAccess.LoadCustomersForStore(storeId))
+        //        customers.Add(new Customer(customerDl));
 
-            return customers;
-        }
+        //    return customers;
+        //}
     }
 }

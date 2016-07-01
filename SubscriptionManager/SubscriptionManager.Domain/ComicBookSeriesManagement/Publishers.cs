@@ -13,9 +13,9 @@ namespace SubscriptionManager.Domain.ComicBookSeriesManagement
     {
         private IPublisherAccess _publisherAccess;
 
-        public Publishers()
+        public Publishers(IPublisherAccess publisherAccess)
         {
-            this._publisherAccess = new PublisherAccess();
+            this._publisherAccess = publisherAccess;
 
             Process();
         }

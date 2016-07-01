@@ -39,10 +39,10 @@ namespace SubscriptionManager.Infrastructure
         {
             kernel.Bind<IStoreAccess>().To<StoreAccess>();
             kernel.Bind<ICustomerAccess>().To<CustomerAccess>();
-            kernel.Bind<IClientele>().To<Customers>();
-            kernel.Bind<ICustomer>().To<Customer>();
-            kernel.Bind<IStores>().To<Stores>();
-            kernel.Bind<IStore>().To<Store>();
+            kernel.Bind<ICustomerSubscriptionAccess>().To<CustomerSubscriptionAccess>();
+            kernel.Bind<ICustomer>().To<CustomerService>();
+            kernel.Bind<IStore>().To<StoreService>();
+            kernel.Bind<IAccess>().To<SqlAccess>();
         }
     }
 }

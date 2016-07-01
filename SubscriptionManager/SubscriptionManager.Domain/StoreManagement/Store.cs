@@ -5,28 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using SubscriptionManager.DataLayer.Abstract;
 using SubscriptionManager.Domain.Abstract;
-using Ninject;
 
 namespace SubscriptionManager.Domain.StoreManagement
 {
-    public interface IStore
-    {
-        bool HasData { get; }
-        Guid StoreId { get; }
-        string StoreName { get; }
-        string AddressOne { get; }
-        string AddressTwo { get; }
-        string City { get; }
-        string State { get; }
-        string ZipCode { get; }
-        string PhoneNumber { get; }
-        string EmailAddress { get; }
-
-        List<ICustomer> Customers { get; }
-    }
-
-
-    public class Store : IStore
+    public class Store
     {
         public bool HasData { get; set; }
         public Guid StoreId { get; set; }
@@ -39,57 +21,27 @@ namespace SubscriptionManager.Domain.StoreManagement
         public string PhoneNumber { get; set; }
         public string EmailAddress { get; set; }
 
-        private IStoreAccess _storeLoader;
-        private IStoreAccess StoreLoader
+        public Store(DataLayer.DataTables.Store store)
         {
-            get
-            {
-                if (_storeLoader == null)
-                {
-                    _storeLoader = new DataLayer.Access.StoreAccess();
-                }
-                return _storeLoader;
-            }
-        }
-
-        [Inject]
-        public IClientele _clientele { private get; set; }
-
-
-        public List<ICustomer> Customers
-        {
-            get
-            {
-                return _clientele.GetCustomersForStore(StoreId);
-            }
-        }
-
-        public Store(SubscriptionManager.DataLayer.DataTables.Store store)
-        {
-            this.FillProperties(store);
-        }
-        public Store(Guid storeId)
-        {
-            var store = StoreLoader.LoadStoreById(storeId);
-
-            if (store != null)
-            {
-                this.FillProperties(store);
-            }
+            FillProperties(store);
         }
 
         private void FillProperties(SubscriptionManager.DataLayer.DataTables.Store store)
         {
-            this.HasData = true;
-            this.StoreId = store.StoreId;
-            this.StoreName = store.StoreName;
-            this.AddressOne = store.AddressOne;
-            this.AddressTwo = store.AddressTwo;
-            this.City = store.City;
-            this.State = store.State;
-            this.ZipCode = store.ZipCode;
-            this.PhoneNumber = store.PhoneNumber;
-            this.EmailAddress = store.EmailAddress;
+            HasData = true;
+
+            if (store != null)
+            {
+                StoreId = store.StoreId;
+                StoreName = store.StoreName;
+                AddressOne = store.AddressOne;
+                AddressTwo = store.AddressTwo;
+                City = store.City;
+                State = store.State;
+                ZipCode = store.ZipCode;
+                PhoneNumber = store.PhoneNumber;
+                EmailAddress = store.EmailAddress;
+            }
         }
     }
 }

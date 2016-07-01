@@ -7,9 +7,9 @@ namespace SubscriptionManager.Models.Store
 {
     public class Stores : List<Store>
     {
-        public Stores(List<Domain.StoreManagement.IStore> stores)
+        public Stores(List<Domain.StoreManagement.Store> stores)
         {
-            foreach (var store in stores)
+            foreach (Domain.StoreManagement.Store store in stores)
             {
                 this.Add(new Store(store));
             }

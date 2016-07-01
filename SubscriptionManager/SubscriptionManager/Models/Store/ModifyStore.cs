@@ -29,22 +29,22 @@ namespace SubscriptionManager.Models.Store
         public string EmailAddress { get; set; }
 
 
-        public ModifyStore(Domain.StoreManagement.IStore store)
+        public ModifyStore(Domain.Abstract.IStore store)
         {
-            if (store != null && store.HasData)
-            {
-                this.StoreId = store.StoreId;
-                this.StoreName = store.StoreName;
-                this.AddressOne = store.AddressOne;
-                this.AddressTwo = store.AddressTwo;
-                this.City = store.City;
-                this.State = store.State;
-                this.ZipCode = store.ZipCode;
-                this.PhoneNumber = store.PhoneNumber;
-                this.EmailAddress = store.EmailAddress;
-            }
-            else
-            {
+            //if (store != null && store.HasData)
+            //{
+            //    this.StoreId = store.StoreId;
+            //    this.StoreName = store.StoreName;
+            //    this.AddressOne = store.AddressOne;
+            //    this.AddressTwo = store.AddressTwo;
+            //    this.City = store.City;
+            //    this.State = store.State;
+            //    this.ZipCode = store.ZipCode;
+            //    this.PhoneNumber = store.PhoneNumber;
+            //    this.EmailAddress = store.EmailAddress;
+            //}
+            //else
+            //{
                 this.StoreId = null;
                 this.StoreName = string.Empty;
                 this.AddressOne = string.Empty;
@@ -54,7 +54,7 @@ namespace SubscriptionManager.Models.Store
                 this.ZipCode = string.Empty;
                 this.PhoneNumber = string.Empty;
                 this.EmailAddress = string.Empty;
-            }
+            //}
         }
     }
 }

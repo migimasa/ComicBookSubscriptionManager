@@ -5,16 +5,19 @@ using System.Web;
 using System.Web.Mvc;
 using SubscriptionManager.Domain.StoreManagement;
 using SubscriptionManager.DataLayer.Abstract;
+using SubscriptionManager.Domain.Abstract;
 
 namespace SubscriptionManager.Controllers
 {
     public class StoreController : Controller
     {
-        private IStores _stores;
+        private IStore _stores;
+        private ICustomer _customers;
 
-        public StoreController(IStores stores)
+        public StoreController(IStore stores, ICustomer customers)
         {
             _stores = stores;
+            _customers = customers;
         }
 
         // GET: Store
@@ -25,7 +28,7 @@ namespace SubscriptionManager.Controllers
 
         public ActionResult Stores()
         {
-            Models.Store.Stores storesViewModel = new Models.Store.Stores(_stores.ActiveStores);
+            Models.Store.Stores storesViewModel = new Models.Store.Stores(_stores.GetAllStores());
             return View(storesViewModel);
         }
 
@@ -35,38 +38,10 @@ namespace SubscriptionManager.Controllers
 
             if (storeId.HasValue)
             {
-                IStore store = _stores.GetStore(storeId.Value);
-
-                Models.Store.Store storeViewModel = new Models.Store.Store(store);
+                Models.Store.Store storeViewModel = new Models.Store.Store(_stores.GetStore(storeId.Value), _customers.GetCustomersForStore(storeId.Value));
                 return View(storeViewModel);
             }
             return new HttpNotFoundResult();
         }
-
-        //[HttpGet]
-        //public ActionResult ModifyStore(string id)
-        //{
-        //    Guid? storeId = Migi.Framework.Helper.Types.GetNullableGuid(id);
-
-        //    IStore store = null;
-
-        //    if (storeId.HasValue)
-        //    {
-        //        store = _stores.GetStore(storeId.Value);
-        //    }
-
-        //    Models.Store.ModifyStore model = new Models.Store.ModifyStore(store);
-        //    return View(model);
-        //}
-
-        //[HttpPost]
-        //public ActionResult ModifyStore(Models.Store.ModifyStore storeModify)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-
-        //    }
-        //    throw new NotImplementedException();
-        //}
     }
 }

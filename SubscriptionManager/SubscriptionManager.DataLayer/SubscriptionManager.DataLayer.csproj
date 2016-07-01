@@ -57,6 +57,7 @@
     <Compile Include="Abstract\ICustomerAccess.cs" />
     <Compile Include="Abstract\ICustomerSubscriptionAccess.cs" />
     <Compile Include="Abstract\IDataTable.cs" />
+    <Compile Include="Abstract\IAccess.cs" />
     <Compile Include="Abstract\IPublisherAccess.cs" />
     <Compile Include="Abstract\ISeriesAccess.cs" />
     <Compile Include="Abstract\IStoreAccess.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Access\CustomerAccess.cs" />
     <Compile Include="Access\CustomerSubscriptionAccess.cs" />
     <Compile Include="Access\PublisherAccess.cs" />
+    <Compile Include="Access\SqlAccess.cs" />
     <Compile Include="Access\StoreAccess.cs" />
     <Compile Include="Access\BaseAccess.cs" />
     <Compile Include="DataTables\Customer.cs" />

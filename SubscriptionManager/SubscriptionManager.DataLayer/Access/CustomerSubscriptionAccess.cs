@@ -16,6 +16,7 @@ namespace SubscriptionManager.DataLayer.Access
 {
     public class CustomerSubscriptionAccess : BaseAccess, Abstract.ICustomerSubscriptionAccess
     {
+        public CustomerSubscriptionAccess(Abstract.IAccess access) : base(access) { }
         public List<CustomerSubscription> LoadSubscriptionsForCustomer(Guid customerId, DateTime searchDate)
         {
             List<CustomerSubscription> subscriptions = new List<CustomerSubscription>();

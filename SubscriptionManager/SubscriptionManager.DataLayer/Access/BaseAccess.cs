@@ -1,32 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.Sql;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.SqlClient;
+using SubscriptionManager.DataLayer.Abstract;
 
 namespace SubscriptionManager.DataLayer.Access
 {
     public class BaseAccess
     {
-        public string ConnectionString
+        private IAccess _access;
+
+        public BaseAccess(IAccess access)
         {
-            get
-            {
-                return ConfigurationManager.ConnectionStrings["SubscriptionManagerConnectionString"].ConnectionString;
-            }
+            _access = access;
         }
 
-        public System.Data.SqlClient.SqlConnection GetOpenConnection()
-        {
-            SqlConnection connection = new SqlConnection(this.ConnectionString);
+        public string ConnectionString { get { return _access.ConnectionString; } }
 
-            connection.Open();
-
-            return connection;
-        }
+        public SqlConnection GetOpenConnection() { return _access.GetOpenConnection(); }
     }
 }

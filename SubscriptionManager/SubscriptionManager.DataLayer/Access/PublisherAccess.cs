@@ -12,6 +12,7 @@ namespace SubscriptionManager.DataLayer.Access
 {
     public class PublisherAccess : BaseAccess, Abstract.IPublisherAccess
     {
+        public PublisherAccess(Abstract.IAccess access) : base(access) { }
         public List<Publisher> LoadPublishers()
         {
             using (SqlConnection connection = GetOpenConnection())

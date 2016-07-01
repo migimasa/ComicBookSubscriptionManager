@@ -12,7 +12,8 @@ namespace SubscriptionManager.DataLayer.Abstract
     {
         List<Customer> LoadCustomersForStore(Guid storeId);
         Customer LoadCustomer(Guid customerId);
-        bool CreateCustomer(Customer customer);
-        bool ModifyCustomer(Customer customer);
+        //bool CreateCustomer(Customer customer);
+        //bool ModifyCustomer(Customer customer);
+        bool SaveCustomer(Customer customer);
     }
 }

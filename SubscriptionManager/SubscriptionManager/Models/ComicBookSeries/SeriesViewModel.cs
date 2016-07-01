@@ -9,36 +9,36 @@ namespace SubscriptionManager.Models.ComicBookSeries
 {
     public class SeriesViewModel
     {
-        private List<SelectListItem> _publisherSelectList;
-        [Display(Name = "Publisher:")]
-        public List<SelectListItem> PublisherSelectList
-        {
-            get
-            {
-                if (_publisherSelectList == null)
-                {
-                    FillPublisherSelectList();
-                }
-                return _publisherSelectList;
-            }
-        }
+        //private List<SelectListItem> _publisherSelectList;
+        //[Display(Name = "Publisher:")]
+        //public List<SelectListItem> PublisherSelectList
+        //{
+        //    get
+        //    {
+        //        if (_publisherSelectList == null)
+        //        {
+        //            FillPublisherSelectList();
+        //        }
+        //        return _publisherSelectList;
+        //    }
+        //}
 
-        public SeriesViewModel()
-        {
+        //public SeriesViewModel()
+        //{
 
-        }
+        //}
 
-        private void FillPublisherSelectList()
-        {
-            Domain.ComicBookSeriesManagement.Publishers publishers = new Domain.ComicBookSeriesManagement.Publishers();
+        //private void FillPublisherSelectList()
+        //{
+        //    Domain.ComicBookSeriesManagement.Publishers publishers = new Domain.ComicBookSeriesManagement.Publishers();
 
-            this._publisherSelectList = new List<SelectListItem>();
+        //    this._publisherSelectList = new List<SelectListItem>();
 
-            foreach (var publisher in publishers.OrderBy(x => x.PublisherName))
-            {
-                this._publisherSelectList.Add(new SelectListItem() { Selected = false, Text = publisher.PublisherName, Value = publisher.PublisherId.ToString() });
-            }
-        }
+        //    foreach (var publisher in publishers.OrderBy(x => x.PublisherName))
+        //    {
+        //        this._publisherSelectList.Add(new SelectListItem() { Selected = false, Text = publisher.PublisherName, Value = publisher.PublisherId.ToString() });
+        //    }
+        //}
 
     }
 }

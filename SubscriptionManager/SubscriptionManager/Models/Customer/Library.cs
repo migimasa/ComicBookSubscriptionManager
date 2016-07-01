@@ -9,44 +9,26 @@ namespace SubscriptionManager.Models.Customer
 {
     public class Library
     {
-        [JsonProperty(PropertyName="customerId")]
+        [JsonProperty(PropertyName = "customerId")]
         public Guid CustomerId { get; set; }
         private DateTime SearchDate { get; set; }
-        
-        //list of subscriptions
-        private List<Subscription> _subscriptions;
 
         [JsonProperty(PropertyName = "subscriptions")]
-        public List<Subscription> Subscriptions
+        public List<Subscription> Subscriptions { get; set; }
+
+
+        public Library(Guid customerId, List<Domain.CustomerManagement.Subscription> subscriptions)
         {
-            get
-            {
-                if (_subscriptions == null)
-                {
-                    _subscriptions = GetSubscriptions();
-                }
-                return _subscriptions;
-            }
+            CustomerId = customerId;
+            Subscriptions = new List<Subscription>();
+
+            FillSubscriptions(subscriptions);
         }
 
-        public Library(Guid customerId, DateTime searchDate)
+        private void FillSubscriptions(List<Domain.CustomerManagement.Subscription> customerSubscriptions)
         {
-            this.CustomerId = customerId;
-            this.SearchDate = searchDate;
-        }
-
-        private List<Subscription> GetSubscriptions()
-        {
-            List<Subscription> subscriptions = new List<Subscription>();
-
-            Domain.CustomerManagement.Library customerLibrary = new Domain.CustomerManagement.Library(this.CustomerId, Migi.Framework.Helper.Search.GetUTCEndOfDaySearchDate(this.SearchDate));
-
-            foreach (var subscription in customerLibrary.Subscriptions)
-            {
-                subscriptions.Add(new Subscription(subscription));
-            }
-
-            return subscriptions;
+            foreach (var subscription in customerSubscriptions)
+                Subscriptions.Add(new Subscription(subscription));
         }
     }
 }

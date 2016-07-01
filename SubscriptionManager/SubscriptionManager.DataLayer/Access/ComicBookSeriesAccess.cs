@@ -16,6 +16,8 @@ namespace SubscriptionManager.DataLayer.Access
 {
     public class ComicBookSeriesAccess : BaseAccess, Abstract.ISeriesAccess
     {
+        public ComicBookSeriesAccess(Abstract.IAccess access) : base(access) { }
+        
         public List<ComicBookSeries> LoadAllSeries(bool? isActive)
         {
             using (SqlConnection connection = GetOpenConnection())

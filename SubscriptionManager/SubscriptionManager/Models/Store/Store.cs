@@ -18,18 +18,18 @@ namespace SubscriptionManager.Models.Store
         public string PhoneNumber { get; private set; }
         public string EmailAddress { get; private set; }
 
-        private List<Customer.Customer> _customers;
-        public List<Customer.Customer> Customers { get
-            {
-                if (_customers == null)
-                    FillCustomers(StoreInformation);
-                return _customers;
-            }
+        public List<Customer.Customer> Customers { get; set; }
+
+        public Store(Domain.StoreManagement.Store store)
+        {
+            FillProperties(store, new List<Domain.CustomerManagement.Customer>());
+        }
+        public Store(Domain.StoreManagement.Store store, List<Domain.CustomerManagement.Customer> customers)
+        {
+            FillProperties(store, customers);
         }
 
-        private Domain.StoreManagement.IStore StoreInformation { get; set; }
-
-        public Store(Domain.StoreManagement.IStore store)
+        private void FillProperties(Domain.StoreManagement.Store store, List<Domain.CustomerManagement.Customer> customers)
         {
             StoreId = store.StoreId;
             StoreName = store.StoreName;
@@ -41,14 +41,18 @@ namespace SubscriptionManager.Models.Store
             PhoneNumber = store.PhoneNumber;
             EmailAddress = store.EmailAddress;
 
-            StoreInformation = store;
+            this.Customers = new List<Customer.Customer>();
+
+            FillCustomers(customers);
         }
 
-        private void FillCustomers(Domain.StoreManagement.IStore store)
+        private void FillCustomers(List<Domain.CustomerManagement.Customer> customers)
         {
-            _customers = new List<Customer.Customer>();
-            foreach (var customer in store.Customers)
-                _customers.Add(new Customer.Customer(customer.StoreId, customer));
+            foreach (var customer in customers)
+                Customers.Add(new Customer.Customer(customer));
+            //_customers = new List<Customer.Customer>();
+            //foreach (var customer in store.Customers)
+            //    _customers.Add(new Customer.Customer(customer.StoreId, customer));
         }
     }
 }

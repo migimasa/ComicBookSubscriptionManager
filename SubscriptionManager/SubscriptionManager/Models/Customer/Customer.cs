@@ -14,19 +14,19 @@ namespace SubscriptionManager.Models.Customer
         [HiddenInput(DisplayValue = false)]
         public Guid StoreId { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage="A first name is required.")]
-        [StringLength(500, MinimumLength=1, ErrorMessage="A first name must be less than 500 characters long.")]
-        [Display(Name="First Name")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "A first name is required.")]
+        [StringLength(500, MinimumLength = 1, ErrorMessage = "A first name must be less than 500 characters long.")]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
-        [Required(AllowEmptyStrings=false, ErrorMessage="A last name is required.")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "A last name is required.")]
         [StringLength(500, ErrorMessage = "A last name must be less than 500 characters long.")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "A phone number is required.")]
         [DataType(DataType.PhoneNumber)]
-        [Display(Name = "Phone #")]   
+        [Display(Name = "Phone #")]
         public string PhoneNumber { get; set; }
 
         [DataType(DataType.EmailAddress)]
@@ -34,11 +34,11 @@ namespace SubscriptionManager.Models.Customer
         public string EmailAddress { get; set; }
 
         [Display(Name = "City")]
-        [Required(AllowEmptyStrings=false, ErrorMessage = "A city is required.")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "A city is required.")]
         public string City { get; set; }
 
         [Display(Name = "State")]
-        [Required(ErrorMessage="A state is required.")]
+        [Required(ErrorMessage = "A state is required.")]
         public string State { get; set; }
 
         public string CityState
@@ -50,16 +50,15 @@ namespace SubscriptionManager.Models.Customer
         }
 
         [DataType(DataType.PostalCode)]
-        [Display(Name = "Zip Code")] 
+        [Display(Name = "Zip Code")]
         public string ZipCode { get; set; }
 
         public int SubscriptionsCount { get; set; }
 
         public Customer() { }
 
-        public Customer(Guid storeId, SubscriptionManager.Domain.Abstract.ICustomer customer)
+        public Customer(Domain.CustomerManagement.Customer customer)
         {
-            this.StoreId = storeId;
             if (customer != null && customer.HasData)
             {
                 FillCustomerProperties(customer);
@@ -70,9 +69,10 @@ namespace SubscriptionManager.Models.Customer
             }
         }
 
-        private void FillCustomerProperties(SubscriptionManager.Domain.Abstract.ICustomer customer)
+        private void FillCustomerProperties(Domain.CustomerManagement.Customer customer)
         {
             this.CustomerId = customer.CustomerId;
+            this.StoreId = customer.StoreId;
             this.FirstName = customer.FirstName;
             this.LastName = customer.LastName;
             this.PhoneNumber = customer.PhoneNumber;
@@ -80,7 +80,7 @@ namespace SubscriptionManager.Models.Customer
             this.City = customer.City;
             this.State = customer.State;
             this.ZipCode = customer.ZipCode;
-            this.SubscriptionsCount = customer.Subscriptions.Count;
+            //this.SubscriptionsCount = customer.Subscriptions.Count;
         }
 
         private void FillDefaultProperties()
@@ -95,7 +95,7 @@ namespace SubscriptionManager.Models.Customer
             this.ZipCode = string.Empty;
             this.SubscriptionsCount = 0;
         }
-        
+
 
     }
 }

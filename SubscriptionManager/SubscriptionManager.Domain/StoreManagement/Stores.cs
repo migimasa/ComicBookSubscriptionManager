@@ -6,51 +6,44 @@ using System.Threading.Tasks;
 using SubscriptionManager.DataLayer.Abstract;
 using SubscriptionManager.DataLayer.DataTables;
 using Migi.Framework.Helper;
+using SubscriptionManager.Domain.Abstract;
 
 
 namespace SubscriptionManager.Domain.StoreManagement
 {
-    public interface IStores
+    public class Stores
     {
-        List<IStore> ActiveStores { get; }
+        //private IStoreAccess _storeAccess;
 
-        IStore GetStore(Guid storeId);
-    }
+        //private List<Store> _activeStores;
+        //public List<Store> ActiveStores
+        //{
+        //    get
+        //    {
+        //        if (_activeStores == null)
+        //            FillActiveStores();
+        //        return _activeStores;
+        //    }
+        //}
 
+        //public Stores(IStoreAccess storeAccess)
+        //{
+        //    _storeAccess = storeAccess;
+        //}
 
-    public class Stores : IStores
-    {
-        private IStoreAccess _storeAccess;
+        //private void FillActiveStores()
+        //{
+        //    _activeStores = new List<Store>();
 
-        private List<IStore> _activeStores;
-        public List<IStore> ActiveStores
-        {
-            get
-            {
-                if (_activeStores == null)
-                    FillActiveStores();
-                return _activeStores;
-            }
-        }
+        //    foreach (var storeDl in _storeAccess.LoadAllStores())
+        //        _activeStores.Add(new Store(storeDl));
+        //}
 
-        public Stores(IStoreAccess storeAccess)
-        {
-            _storeAccess = storeAccess;
-        }
+        //public Store GetStore(Guid storeId)
+        //{
+        //    Store store = ActiveStores.Where(x => x.StoreId == storeId).FirstOrDefault();
 
-        private void FillActiveStores()
-        {
-            _activeStores = new List<IStore>();
-
-            foreach (var storeDl in _storeAccess.LoadAllStores())
-                _activeStores.Add(new Store(storeDl));
-        }
-
-        public IStore GetStore(Guid storeId)
-        {
-            IStore store = ActiveStores.Where(x => x.StoreId == storeId).FirstOrDefault();
-
-            return store;
-        }
+        //    return store;
+        //}
     }
 }

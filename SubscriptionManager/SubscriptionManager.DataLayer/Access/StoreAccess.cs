@@ -15,7 +15,7 @@ namespace SubscriptionManager.DataLayer.Access
 {
     public class StoreAccess : BaseAccess, Abstract.IStoreAccess
     {
-        
+        public StoreAccess(Abstract.IAccess access) : base(access) { }
         public Store LoadStoreById(Guid storeId)
         {
             using (SqlConnection connection = GetOpenConnection())
