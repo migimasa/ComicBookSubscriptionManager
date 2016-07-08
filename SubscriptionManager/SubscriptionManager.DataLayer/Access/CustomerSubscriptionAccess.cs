@@ -42,6 +42,17 @@ namespace SubscriptionManager.DataLayer.Access
             return subscription;
         }
 
+        public CustomerSubscription LoadCustomerSubscriptionByCustomerAndSeries(Guid customerId, Guid comicBookSeriesId, DateTime searchDate)
+        {
+            CustomerSubscription subscription = null;
+
+            using (SqlConnection connection = GetOpenConnection())
+            {
+                subscription = connection.Query<CustomerSubscription>("spCustomerSubscriptionGetCustomerSubscription", new { CustomerId = customerId, ComicBookSeriesId = comicBookSeriesId, SearchDate = searchDate }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            }
+            return subscription;
+        }
+
         public bool SaveSubscription(CustomerSubscription subscription)
         {
             using (SqlConnection connection = GetOpenConnection())

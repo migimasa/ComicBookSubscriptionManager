@@ -12,11 +12,13 @@ namespace SubscriptionManager.Controllers
     {
         private Guid userId = new Guid("BC6B99B4-AC2A-4DD6-B183-73F52E26C44A");
         private ICustomer _customers;
+        private IComicBookSeries _series;
 
 
-        public CustomerController(ICustomer customers)
+        public CustomerController(ICustomer customers, IComicBookSeries comicBookSeries)
         {
             _customers = customers;
+            _series = comicBookSeries;
         }
 
         // GET: Customer
@@ -102,18 +104,18 @@ namespace SubscriptionManager.Controllers
             return new HttpNotFoundResult();
         }
 
-        //[HttpGet]
-        //public ActionResult ManageLibrary(string id)
-        //{
-        //    Guid? customerId = Migi.Framework.Helper.Types.GetNullableGuid(id);
+        [HttpGet]
+        public ActionResult ManageLibrary(string id)
+        {
+            Guid? customerId = Migi.Framework.Helper.Types.GetNullableGuid(id);
 
-        //    if (customerId.HasValue)
-        //    {
-        //        Models.Customer.ManageCustomerLibrary viewModel = new Models.Customer.ManageCustomerLibrary(customerId.Value);
-        //        return View(viewModel);
-        //    }
-        //    return new HttpNotFoundResult();
-        //}
+            if (customerId.HasValue)
+            {
+                Models.Customer.ManageCustomerLibrary viewModel = new Models.Customer.ManageCustomerLibrary(customerId.Value, _series.GetAllPublishers());
+                return View(viewModel);
+            }
+            return new HttpNotFoundResult();
+        }
 
         //[HttpPost]
         //public ActionResult _getManageLibraryData(Guid customerId, Guid? publisherId)

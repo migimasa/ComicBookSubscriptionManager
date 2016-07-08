@@ -22,6 +22,15 @@ namespace SubscriptionManager.DataLayer.DataTables
 
         public DateTime EffectiveDate { get; set; }
         public DateTime ExpiresDate { get; set; }
+        public bool IsExpiredSubscription
+        {
+            get
+            {
+                if (this.DeleteDate.HasValue || this.ExpiresDate < DateTime.UtcNow)
+                    return true;
+                return false;
+            }
+        }
 
         public DynamicParameters GetParametersForSave()
         {

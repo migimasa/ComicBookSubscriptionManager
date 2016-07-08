@@ -16,5 +16,9 @@ namespace SubscriptionManager.Domain.Abstract
         Migi.Framework.Models.ChangeResult SaveCustomer(CustomerSave customerToSave);
 
         List<Subscription> GetCustomerLibrary(Guid customerId, DateTime searchDate);
+
+        Migi.Framework.Models.ChangeResult AddCustomerSubscription(SubscriptionSave subscriptionToSave);
+
+        Migi.Framework.Models.ChangeResult RemoveCustomerSubscription(Guid subscriptionId, Guid userId);
     }
 }

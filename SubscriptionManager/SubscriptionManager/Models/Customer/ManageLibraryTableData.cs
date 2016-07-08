@@ -36,12 +36,12 @@ namespace SubscriptionManager.Models.Customer
         //    FillAllSeriesDictionary();
         //    FillCustomerSubscriptionsDictionary();
         //}
-        
+
         //private void FillAllSeriesDictionary()
         //{
         //    AllSeriesDictionary = Domain.ComicBookSeriesManagement.Series.GetComicBookSeries(PublisherId, true).ToDictionary(x => x.ComicBookSeriesId);
         //}
-        
+
         //private void FillCustomerSubscriptionsDictionary()
         //{
         //    Domain.CustomerManagement.Library customerLibrary = new Domain.CustomerManagement.Library(CustomerId, Migi.Framework.Helper.Search.GetUTCEndOfDaySearchDate(SearchDate));
@@ -66,24 +66,23 @@ namespace SubscriptionManager.Models.Customer
         //}
 
 
-        //public class LibraryRow
-        //{
-        //    [JsonProperty(PropertyName="comicBookSeriesId")]
-        //    public Guid SeriesId { get; set; }
-        //    [JsonProperty(PropertyName = "subscriptionId")]
-        //    public Guid? SubscriptionId { get; set; }
-        //    [JsonProperty(PropertyName = "seriesTitle")]
-        //    public string SeriesTitle { get; set; }
-        //    [JsonProperty(PropertyName = "isSubscribed")]
-        //    public bool IsSubscribed { get { return this.SubscriptionId.HasValue; } }
+        public class LibraryRow
+        {
+            [JsonProperty(PropertyName = "comicBookSeriesId")]
+            public Guid SeriesId { get; set; }
+            [JsonProperty(PropertyName = "subscriptionId")]
+            public Guid? SubscriptionId { get; set; }
+            [JsonProperty(PropertyName = "seriesTitle")]
+            public string SeriesTitle { get; set; }
+            [JsonProperty(PropertyName = "isSubscribed")]
+            public bool IsSubscribed { get { return this.SubscriptionId.HasValue; } }
 
-        //    public LibraryRow(Domain.ComicBookSeriesManagement.Series series, Guid? subscriptionId)
-        //    {
-        //        this.SeriesId = series.ComicBookSeriesId;
-        //        this.SubscriptionId = subscriptionId;
-        //        this.SeriesTitle = series.ComicBookSeriesTitle;
-        //    }
-        //}
-
+            public LibraryRow(Domain.ComicBookSeriesManagement.Series series, Guid? subscriptionId)
+            {
+                this.SeriesId = series.ComicBookSeriesId;
+                this.SubscriptionId = subscriptionId;
+                this.SeriesTitle = series.ComicBookSeriesTitle;
+            }
+        }
     }
 }

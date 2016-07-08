@@ -34,164 +34,30 @@ namespace SubscriptionManager.Domain.CustomerManagement
 
         public Customer(SubscriptionManager.DataLayer.DataTables.Customer customer)
         {
-            this.FillProperties(customer);
+            FillProperties(customer);
         }
 
         private void FillProperties(SubscriptionManager.DataLayer.DataTables.Customer customer)
         {
-            this.HasData = true;
+            HasData = true;
 
             if (customer != null)
             {
-                this.CustomerId = customer.CustomerId;
-                this.StoreId = customer.StoreId;
-                this.FirstName = customer.FirstName;
-                this.LastName = customer.LastName;
-                this.PhoneNumber = customer.PhoneNumber;
-                this.EmailAddress = customer.EmailAddress;
-                this.City = customer.City;
-                this.State = customer.State;
-                this.ZipCode = customer.ZipCode;
-                this.CreateDate = customer.CreateDate;
-                this.CreateUserId = customer.CreateUserId;
-                this.ChangeUserId = customer.ChangeUserId;
-                this.ChangeDate = customer.ChangeDate;
-                this.DeleteDate = customer.DeleteDate;
+                CustomerId = customer.CustomerId;
+                StoreId = customer.StoreId;
+                FirstName = customer.FirstName;
+                LastName = customer.LastName;
+                PhoneNumber = customer.PhoneNumber;
+                EmailAddress = customer.EmailAddress;
+                City = customer.City;
+                State = customer.State;
+                ZipCode = customer.ZipCode;
+                CreateDate = customer.CreateDate;
+                CreateUserId = customer.CreateUserId;
+                ChangeUserId = customer.ChangeUserId;
+                ChangeDate = customer.ChangeDate;
+                DeleteDate = customer.DeleteDate;
             }
         }
-
-        //public Migi.Framework.Models.ChangeResult SaveCustomer(Guid changeUserId)
-        //{
-        //    Migi.Framework.Models.ChangeResult result = new Migi.Framework.Models.ChangeResult();
-
-        //    if (string.IsNullOrWhiteSpace(this.FirstName))
-        //    {
-        //        result.AddErrorMessage("Customer requires a first name.");
-        //    }
-        //    if (string.IsNullOrWhiteSpace(this.LastName))
-        //    {
-        //        result.AddErrorMessage("Customer requires a last name.");
-        //    }
-        //    if (string.IsNullOrWhiteSpace(this.PhoneNumber))
-        //    {
-        //        result.AddErrorMessage("Customer requires a phone number.");
-        //    }
-        //    if (string.IsNullOrWhiteSpace(this.City))
-        //    {
-        //        result.AddErrorMessage("Customer requires a city.");
-        //    }
-
-        //    if (result.IsSuccess)
-        //    {
-
-        //        DataLayer.DataTables.Customer createCustomerDl = new DataLayer.DataTables.Customer()
-        //        {
-        //            ChangeDate = DateTime.UtcNow,
-        //            ChangeUserId = changeUserId,
-        //            City = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(this.City),
-        //            CreateDate = this.CreateDate,
-        //            CreateUserId = this.CreateUserId,
-        //            CustomerId = this.CustomerId,
-        //            DeleteDate = this.DeleteDate,
-        //            EmailAddress = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(this.EmailAddress),
-        //            FirstName = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(this.FirstName),
-        //            LastName = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(this.LastName),
-        //            PhoneNumber = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(this.PhoneNumber),
-        //            State = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(this.State),
-        //            StoreId = this.StoreId,
-        //            ZipCode = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(this.ZipCode)
-        //        };
-
-        //        if (!this.CustomerLoader.ModifyCustomer(createCustomerDl))
-        //        {
-        //            result.AddErrorMessage("Could not save Customer.");
-        //        }
-        //    }
-        //    return result;
-        //}
-
-        //#region Create Customer
-        //public class CustomerCreate
-        //{
-        //    public Guid StoreId { get; set; }
-        //    public string FirstName { get; set; }
-        //    public string LastName { get; set; }
-        //    public string City { get; set; }
-        //    public string State { get; set; }
-        //    public string ZipCode { get; set; }
-        //    public string PhoneNumber { get; set; }
-        //    public string EmailAddress { get; set; }
-        //    public Guid UserId { get; set; }
-
-        //    public CreateCustomerResult ValidateCustomer()
-        //    {
-        //        CreateCustomerResult result = new CreateCustomerResult();
-
-        //        if (string.IsNullOrWhiteSpace(this.FirstName))
-        //        {
-        //            result.AddErrorMessage("Customer must have a first name.");
-        //        }
-        //        if (string.IsNullOrWhiteSpace(this.LastName))
-        //        {
-        //            result.AddErrorMessage("Customer must have a last name.");
-        //        }
-        //        if (string.IsNullOrWhiteSpace(this.City))
-        //        {
-        //            result.AddErrorMessage("Customer must have a city.");
-        //        }
-        //        if (string.IsNullOrWhiteSpace(this.PhoneNumber))
-        //        {
-        //            result.AddErrorMessage("Customer must have a phone number.");
-        //        }
-
-        //        return result;
-        //    }
-        //}
-
-        //public class CreateCustomerResult : Migi.Framework.Models.ChangeResult
-        //{
-        //    public Guid? CustomerId { get; set; }
-        //}
-
-        //public static CreateCustomerResult CreateNewCustomer(CustomerCreate customerToCreate)
-        //{
-        //    CreateCustomerResult result = customerToCreate.ValidateCustomer();
-
-        //    if (result.IsSuccess)
-        //    {
-        //        ICustomerAccess customerDl = new DataLayer.Access.CustomerAccess();
-
-        //        Guid newCustomerId = Guid.NewGuid();
-
-        //        var createCustomerDl = new DataLayer.DataTables.Customer()
-        //        {
-        //            ChangeDate = DateTime.UtcNow,
-        //            ChangeUserId = customerToCreate.UserId,
-        //            City = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.City),
-        //            CreateDate = DateTime.UtcNow,
-        //            CreateUserId = customerToCreate.UserId,
-        //            CustomerId = newCustomerId,
-        //            DeleteDate = null,
-        //            EmailAddress = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.EmailAddress),
-        //            FirstName = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.FirstName),
-        //            LastName = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.LastName),
-        //            PhoneNumber = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.PhoneNumber),
-        //            State = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.State),
-        //            StoreId = customerToCreate.StoreId,
-        //            ZipCode = Migi.Framework.Helper.StringHelper.TrimStringReplaceNulls(customerToCreate.ZipCode)
-        //        };
-
-        //        if (customerDl.CreateCustomer(createCustomerDl))
-        //        {
-        //            result.CustomerId = newCustomerId;
-        //        }
-        //        else
-        //        {
-        //            result.AddErrorMessage("Could not save Customer.");
-        //        }
-        //    }
-        //    return result;
-        //}
-        //#endregion
     }
 }

@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IComicBookSeries.cs" />
     <Compile Include="Abstract\ICustomer.cs" />
     <Compile Include="Abstract\ILibrary.cs" />
     <Compile Include="Abstract\ISeries.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Abstract\ISubscription.cs" />
     <Compile Include="Base\Helper.cs" />
     <Compile Include="Base\TransactionBase.cs" />
+    <Compile Include="ComicBookSeriesManagement\ComicBookSeriesService.cs" />
     <Compile Include="ComicBookSeriesManagement\Publishers.cs" />
     <Compile Include="ComicBookSeriesManagement\Series.cs" />
     <Compile Include="CustomerManagement\Customer.cs" />
@@ -68,6 +70,7 @@
     <Compile Include="CustomerManagement\CustomerService.cs" />
     <Compile Include="CustomerManagement\Library.cs" />
     <Compile Include="CustomerManagement\Subscription.cs" />
+    <Compile Include="CustomerManagement\SubscriptionSave.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StoreManagement\Store.cs" />
     <Compile Include="StoreManagement\Stores.cs" />

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SubscriptionManager.DataLayer.Abstract;
+using SubscriptionManager.DataLayer.DataTables;
 using SubscriptionManager.Domain.Abstract;
 
 namespace SubscriptionManager.Domain.CustomerManagement
@@ -43,9 +44,7 @@ namespace SubscriptionManager.Domain.CustomerManagement
 
             return result;
         }
-
-
-
+        
         public List<Subscription> GetCustomerLibrary(Guid customerId, DateTime searchDate)
         {
             List<Subscription> subscription = new List<Subscription>();
@@ -54,6 +53,43 @@ namespace SubscriptionManager.Domain.CustomerManagement
                 subscription.Add(new Subscription(subscriptionDataLayer));
 
             return subscription;
+        }
+
+        public Migi.Framework.Models.ChangeResult AddCustomerSubscription(SubscriptionSave subscriptionToSave)
+        {
+            Migi.Framework.Models.ChangeResult result = new Migi.Framework.Models.ChangeResult();
+
+            if (_subscriptionAccess.LoadCustomerSubscriptionByCustomerAndSeries(subscriptionToSave.CustomerId, subscriptionToSave.ComicBookSeriesId, DateTime.UtcNow) != null)
+                result.AddErrorMessage("Customer is already subscribed to series");
+
+            if (result.IsSuccess)
+                _subscriptionAccess.SaveSubscription(subscriptionToSave.GetSubscriptionDataLayer());
+
+            return result;
+        }
+
+        public Migi.Framework.Models.ChangeResult RemoveCustomerSubscription(Guid subscriptionId, Guid userId)
+        {
+            Migi.Framework.Models.ChangeResult result = new Migi.Framework.Models.ChangeResult();
+
+            CustomerSubscription subscription = _subscriptionAccess.LoadCustomerSubscription(subscriptionId);
+
+            if (subscription == null)
+                result.AddErrorMessage("Could not load subscription");
+            else if (subscription.IsExpiredSubscription)
+                result.AddErrorMessage("Subscription is already removed");
+            
+            if (result.IsSuccess)
+            {
+                subscription.ExpiresDate = DateTime.UtcNow;
+                subscription.DeleteDate = DateTime.UtcNow;
+                subscription.ChangeDate = DateTime.UtcNow;
+                subscription.ChangeUserId = userId;
+
+                if (!_subscriptionAccess.SaveSubscription(subscription))
+                    result.AddErrorMessage("Could not save subscription");
+            }
+            return result;
         }
     }
 }

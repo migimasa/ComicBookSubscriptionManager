@@ -13,6 +13,7 @@ namespace SubscriptionManager.DataLayer.Abstract
     {
         List<CustomerSubscription> LoadSubscriptionsForCustomer(Guid customerId, DateTime searchDate);
         CustomerSubscription LoadCustomerSubscription(Guid customerSubscriptionId);
+        CustomerSubscription LoadCustomerSubscriptionByCustomerAndSeries(Guid customerId, Guid comicBookSeriesId, DateTime searchDate);
         bool SaveSubscription(CustomerSubscription subscription);
     }
 }
