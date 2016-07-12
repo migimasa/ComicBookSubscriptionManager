@@ -10,5 +10,11 @@ namespace SubscriptionManager.Domain.Abstract
     public interface IComicBookSeries
     {
         List<Publisher> GetAllPublishers();
+
+        Publisher GetPublisher(Guid publisherId);
+
+        Series GetComicBookSeries(Guid comicBookSeriesId);
+
+        List<Series> GetAllComicBookSeries(Guid? publisherId);
     }
 }

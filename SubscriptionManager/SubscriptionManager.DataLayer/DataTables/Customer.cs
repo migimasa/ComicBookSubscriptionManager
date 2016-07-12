@@ -22,6 +22,7 @@ namespace SubscriptionManager.DataLayer.DataTables
         public string City { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
+        public int SubscriptionCount { get; set; }
 
 
         public DynamicParameters GetParametersForCreate()

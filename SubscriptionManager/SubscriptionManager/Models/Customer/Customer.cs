@@ -80,7 +80,7 @@ namespace SubscriptionManager.Models.Customer
             this.City = customer.City;
             this.State = customer.State;
             this.ZipCode = customer.ZipCode;
-            //this.SubscriptionsCount = customer.Subscriptions.Count;
+            this.SubscriptionsCount = customer.SubscriptionCount;
         }
 
         private void FillDefaultProperties()

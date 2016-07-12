@@ -13,8 +13,7 @@ namespace SubscriptionManager.Controllers
         private Guid userId = new Guid("BC6B99B4-AC2A-4DD6-B183-73F52E26C44A");
         private ICustomer _customers;
         private IComicBookSeries _series;
-
-
+        
         public CustomerController(ICustomer customers, IComicBookSeries comicBookSeries)
         {
             _customers = customers;
@@ -117,32 +116,33 @@ namespace SubscriptionManager.Controllers
             return new HttpNotFoundResult();
         }
 
-        //[HttpPost]
-        //public ActionResult _getManageLibraryData(Guid customerId, Guid? publisherId)
-        //{
-        //    Models.Customer.ManageLibraryTableData tableData = new Models.Customer.ManageLibraryTableData(customerId, publisherId, DateTime.Today);
+        [HttpPost]
+        public ActionResult _getManageLibraryData(Guid customerId, Guid? publisherId)
+        {
+            Models.Customer.ManageLibraryTableData tableData = new Models.Customer.ManageLibraryTableData(customerId, publisherId, DateTime.Today, _customers, _series);
 
-        //    return Json(new { data = tableData.Series });
-        //}
+            return Json(new { data = tableData.Series });
+        }
 
-        //[HttpPost]
-        //public ActionResult AddSubscription(Guid customerId, Guid comicBookSeriesId)
-        //{
-        //    var customerLibrary = new Domain.CustomerManagement.Library(customerId, DateTime.UtcNow);
+        [HttpPost]
+        public ActionResult AddSubscription(Guid customerId, Guid comicBookSeriesId)
+        {
+            var addResult = _customers.AddCustomerSubscription(new SubscriptionSave()
+            {
+                ComicBookSeriesId = comicBookSeriesId,
+                CustomerId = customerId,
+                UserId = userId
+            });
 
-        //    var addResult = customerLibrary.AddSubscription(comicBookSeriesId, Guid.Empty);
+            return Json(new { IsSuccess = addResult.IsSuccess, ErrorMessages = addResult.ErrorMessages });
+        }
 
-        //    return Json(new { IsSuccess = addResult.IsSuccess, ErrorMessages = addResult.ErrorMessages });
-        //}
+        [HttpPost]
+        public ActionResult RemoveSubscription(Guid customerId, Guid subscriptionId)
+        {
+            var removeResult = _customers.RemoveCustomerSubscription(subscriptionId, userId);
 
-        //[HttpPost]
-        //public ActionResult RemoveSubscription(Guid customerId, Guid subscriptionId)
-        //{
-        //    var customerLibrary = new Domain.CustomerManagement.Library(customerId, DateTime.UtcNow);
-
-        //    var removeResult = customerLibrary.RemoveSubscription(subscriptionId, Guid.Empty);
-
-        //    return Json(new { IsSuccess = removeResult.IsSuccess, ErrorMessages = removeResult.ErrorMessages });
-        //}
+            return Json(new { IsSuccess = removeResult.IsSuccess, ErrorMessages = removeResult.ErrorMessages });
+        }
     }
 }

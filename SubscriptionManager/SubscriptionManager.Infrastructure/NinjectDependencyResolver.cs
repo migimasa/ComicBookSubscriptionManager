@@ -12,6 +12,7 @@ using SubscriptionManager.Domain.CustomerManagement;
 using SubscriptionManager.Domain.StoreManagement;
 using Ninject.Parameters;
 using Ninject.Syntax;
+using SubscriptionManager.Domain.ComicBookSeriesManagement;
 
 namespace SubscriptionManager.Infrastructure
 {
@@ -43,6 +44,10 @@ namespace SubscriptionManager.Infrastructure
             kernel.Bind<ICustomer>().To<CustomerService>();
             kernel.Bind<IStore>().To<StoreService>();
             kernel.Bind<IAccess>().To<SqlAccess>();
+            kernel.Bind<IComicBookSeries>().To<ComicBookSeriesService>();
+            kernel.Bind<ISeriesAccess>().To<ComicBookSeriesAccess>();
+            kernel.Bind<IPublisherAccess>().To<PublisherAccess>();
+
         }
     }
 }

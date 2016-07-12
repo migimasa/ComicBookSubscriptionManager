@@ -21,12 +21,10 @@ namespace SubscriptionManager.Domain.ComicBookSeriesManagement
         private Guid ChangeUserId { get; set; }
         private DateTime ChangeDate { get; set; }
         private DateTime? DeleteDate { get; set; }
-
-        private ISeriesAccess _seriesLoader;
-
-        public Series(ISeriesAccess seriesLoader)
+        
+        public Series(SubscriptionManager.DataLayer.DataTables.ComicBookSeries series)
         {
-            _seriesLoader = seriesLoader;
+            FillProperties(series);
         }
 
         private void FillProperties(SubscriptionManager.DataLayer.DataTables.ComicBookSeries series)

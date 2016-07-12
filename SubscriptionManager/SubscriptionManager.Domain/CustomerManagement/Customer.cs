@@ -23,6 +23,7 @@ namespace SubscriptionManager.Domain.CustomerManagement
         public string City { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
+        public int SubscriptionCount { get; set; }
         private DateTime CreateDate { get; set; }
         private Guid CreateUserId { get; set; }
         private Guid ChangeUserId { get; set; }
@@ -52,6 +53,7 @@ namespace SubscriptionManager.Domain.CustomerManagement
                 City = customer.City;
                 State = customer.State;
                 ZipCode = customer.ZipCode;
+                SubscriptionCount = customer.SubscriptionCount;
                 CreateDate = customer.CreateDate;
                 CreateUserId = customer.CreateUserId;
                 ChangeUserId = customer.ChangeUserId;

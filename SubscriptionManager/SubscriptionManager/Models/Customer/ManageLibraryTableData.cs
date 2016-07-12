@@ -5,65 +5,71 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using SubscriptionManager.Domain.ComicBookSeriesManagement;
+using SubscriptionManager.Domain.Abstract;
 
 
 namespace SubscriptionManager.Models.Customer
 {
     public class ManageLibraryTableData
     {
-        //private Guid CustomerId { get; set; }
-        //private Guid? PublisherId { get; set; }
-        //private DateTime SearchDate { get; set; }
+        private readonly IComicBookSeries _seriesManagement;
+        private readonly ICustomer _customerManagement;
 
-        //public List<LibraryRow> Series { get; set; }
+        private Guid CustomerId { get; set; }
+        private Guid? PublisherId { get; set; }
+        private DateTime SearchDate { get; set; }
 
-        //private Dictionary<Guid, Series> AllSeriesDictionary { get; set; }
-        //private Dictionary<Guid, Domain.Abstract.ISubscription> CustomerSubscriptionsDictionary { get; set; }
+        public List<LibraryRow> Series { get; set; }
 
-        //public ManageLibraryTableData(Guid customerId, Guid? publisherId, DateTime searchDate)
-        //{
-        //    this.CustomerId = customerId;
-        //    this.PublisherId = publisherId;
-        //    this.SearchDate = searchDate;
-        //    this.Series = new List<LibraryRow>();
+        private Dictionary<Guid, Series> AllSeriesDictionary { get; set; }
+        private Dictionary<Guid, Domain.CustomerManagement.Subscription> CustomerSubscriptionsDictionary { get; set; }
 
-        //    FillDictionaries();
-        //    FillComicBookSeriesRows();
-        //}
+        public ManageLibraryTableData(Guid customerId, Guid? publisherId, DateTime searchDate, ICustomer customerManagement, IComicBookSeries seriesManagement)
+        {
+            this.CustomerId = customerId;
+            this.PublisherId = publisherId;
+            this.SearchDate = searchDate;
+            this.Series = new List<LibraryRow>();
+            this._customerManagement = customerManagement;
+            this._seriesManagement = seriesManagement;
 
-        //private void FillDictionaries()
-        //{
-        //    FillAllSeriesDictionary();
-        //    FillCustomerSubscriptionsDictionary();
-        //}
+            FillDictionaries();
+            FillComicBookSeriesRows();
+        }
 
-        //private void FillAllSeriesDictionary()
-        //{
-        //    AllSeriesDictionary = Domain.ComicBookSeriesManagement.Series.GetComicBookSeries(PublisherId, true).ToDictionary(x => x.ComicBookSeriesId);
-        //}
+        private void FillDictionaries()
+        {
+            FillAllSeriesDictionary();
+            FillCustomerSubscriptionsDictionary();
+        }
 
-        //private void FillCustomerSubscriptionsDictionary()
-        //{
-        //    Domain.CustomerManagement.Library customerLibrary = new Domain.CustomerManagement.Library(CustomerId, Migi.Framework.Helper.Search.GetUTCEndOfDaySearchDate(SearchDate));
+        private void FillAllSeriesDictionary()
+        {
+            AllSeriesDictionary = _seriesManagement.GetAllComicBookSeries(PublisherId).ToDictionary(x => x.ComicBookSeriesId);
+            
+        }
 
-        //    CustomerSubscriptionsDictionary = customerLibrary.Subscriptions.ToDictionary(x => x.ComicBookSeriesId);
-        //}
+        private void FillCustomerSubscriptionsDictionary()
+        {
+            CustomerSubscriptionsDictionary = _customerManagement.GetCustomerLibrary(CustomerId,
+                Migi.Framework.Helper.Search.GetUTCEndOfDaySearchDate(SearchDate)).ToDictionary(x => x.ComicBookSeriesId);
+        }
 
-        //private void FillComicBookSeriesRows()
-        //{
-        //    foreach (Domain.ComicBookSeriesManagement.Series series in AllSeriesDictionary.Values)
-        //        this.Series.Add(new LibraryRow(series, GetCustomerSubscriptionId(series.ComicBookSeriesId)));
-        //}
+        private void FillComicBookSeriesRows()
+        {
+            foreach (Domain.ComicBookSeriesManagement.Series series in AllSeriesDictionary.Values)
+                this.Series.Add(new LibraryRow(series, GetCustomerSubscriptionId(series.ComicBookSeriesId)));
+        }
 
-        //private Guid? GetCustomerSubscriptionId(Guid comicBookSeriesId)
-        //{
-        //    Guid? subscriptionId = null;
+        private Guid? GetCustomerSubscriptionId(Guid comicBookSeriesId)
+        {
+            Guid? subscriptionId = null;
 
-        //    if (CustomerSubscriptionsDictionary.ContainsKey(comicBookSeriesId))
-        //        subscriptionId = CustomerSubscriptionsDictionary[comicBookSeriesId].SubscriptionId;
+            if (CustomerSubscriptionsDictionary.ContainsKey(comicBookSeriesId))
+                subscriptionId = CustomerSubscriptionsDictionary[comicBookSeriesId].SubscriptionId;
 
-        //    return subscriptionId;
-        //}
+            return subscriptionId;
+        }
 
 
         public class LibraryRow
